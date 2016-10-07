@@ -1,5 +1,9 @@
 package com.example.lukelin.udacitycapstoneproject;
 
+import com.example.lukelin.udacitycapstoneproject.pojos.AgencyList;
+import com.example.lukelin.udacitycapstoneproject.pojos.GetRouteResult;
+import com.example.lukelin.udacitycapstoneproject.pojos.RouteList;
+
 import retrofit2.Call;
 import retrofit2.Retrofit;
 import retrofit2.converter.simplexml.SimpleXmlConverterFactory;
@@ -22,7 +26,13 @@ public class RestClient {
     public static RestService service = retrofit.create(RestService.class);
 
     public interface RestService {
-        @GET("publicXMLFeed")
-        Call<AgencyList> command(@Query("command") String command);
+        @GET("publicXMLFeed?command=agencyList")
+        Call<AgencyList> getAgencyList();
+
+        @GET("publicXMLFeed?command=routeList")
+        Call<RouteList> getRouteList(@Query("a") String agency);
+
+        @GET("publicXMLFeed?command=routeConfig")
+        Call<GetRouteResult> getRouteDetail(@Query("a") String agency, @Query("r") String route);
     }
 }

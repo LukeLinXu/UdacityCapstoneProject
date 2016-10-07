@@ -1,4 +1,4 @@
-package com.example.lukelin.udacitycapstoneproject;
+package com.example.lukelin.udacitycapstoneproject.pojos;
 
 import org.simpleframework.xml.Attribute;
 import org.simpleframework.xml.Root;
