@@ -12,7 +12,7 @@ import java.util.List;
 @Root(name = "direction")
 public class Direction {
 
-    @Attribute(name = "tag")
+    @Attribute(name = "tag", required = false)
     private String tag;
 
     @Attribute(name = "title", required = false)
@@ -27,7 +27,10 @@ public class Direction {
     @Attribute(name = "branch", required = false)
     private String branch;
 
-    @ElementList(inline = true)
+    @ElementList(inline = true, required = false)
     private List<Stop> stopList;
+
+    @ElementList(inline = true, required = false)
+    private List<Prediction> predictionList;
 
 }

@@ -1,8 +1,9 @@
 package com.example.lukelin.udacitycapstoneproject;
 
-import com.example.lukelin.udacitycapstoneproject.pojos.AgencyList;
+import com.example.lukelin.udacitycapstoneproject.pojos.AgencyListResult;
 import com.example.lukelin.udacitycapstoneproject.pojos.GetRouteResult;
-import com.example.lukelin.udacitycapstoneproject.pojos.RouteList;
+import com.example.lukelin.udacitycapstoneproject.pojos.PredictionsResult;
+import com.example.lukelin.udacitycapstoneproject.pojos.RouteListResult;
 
 import retrofit2.Call;
 import retrofit2.Retrofit;
@@ -27,12 +28,21 @@ public class RestClient {
 
     public interface RestService {
         @GET("publicXMLFeed?command=agencyList")
-        Call<AgencyList> getAgencyList();
+        Call<AgencyListResult> getAgencyList();
 
         @GET("publicXMLFeed?command=routeList")
-        Call<RouteList> getRouteList(@Query("a") String agency);
+        Call<RouteListResult> getRouteList(@Query("a") String agency);
 
         @GET("publicXMLFeed?command=routeConfig")
         Call<GetRouteResult> getRouteDetail(@Query("a") String agency, @Query("r") String route);
+
+        @GET("publicXMLFeed?command=predictions")
+        Call<PredictionsResult> getPredictions(@Query("a") String agency, @Query("stopId") String stopId);
+
+        @GET("publicXMLFeed?command=predictions")
+        Call<PredictionsResult> getPredictions(@Query("a") String agency, @Query("stopId") String stopId, @Query("routeTag") String routeTag);
+
+        @GET("publicXMLFeed?command=predictions")
+        Call<PredictionsResult> getPredictionsByTags(@Query("a") String agency, @Query("r") String routeTag, @Query("s") String stopTag);
     }
 }

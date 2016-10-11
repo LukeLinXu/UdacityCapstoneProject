@@ -10,9 +10,10 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
-import com.example.lukelin.udacitycapstoneproject.pojos.AgencyList;
+import com.example.lukelin.udacitycapstoneproject.pojos.AgencyListResult;
 import com.example.lukelin.udacitycapstoneproject.pojos.GetRouteResult;
-import com.example.lukelin.udacitycapstoneproject.pojos.RouteList;
+import com.example.lukelin.udacitycapstoneproject.pojos.PredictionsResult;
+import com.example.lukelin.udacitycapstoneproject.pojos.RouteListResult;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -36,28 +37,28 @@ public class MainActivity extends AppCompatActivity {
                         .setAction("Action", null).show();
                 switch (time){
                     case 0:
-                        RestClient.service.getAgencyList().enqueue(new Callback<AgencyList>() {
+                        RestClient.service.getAgencyList().enqueue(new Callback<AgencyListResult>() {
                             @Override
-                            public void onResponse(Call<AgencyList> call, retrofit2.Response<AgencyList> response) {
+                            public void onResponse(Call<AgencyListResult> call, retrofit2.Response<AgencyListResult> response) {
                                 Log.d(TAG, "onResponse: ");
                             }
 
                             @Override
-                            public void onFailure(Call<AgencyList> call, Throwable t) {
+                            public void onFailure(Call<AgencyListResult> call, Throwable t) {
                                 Log.d(TAG, "onFailure: ");
                             }
                         });
                         break;
 
                     case 1:
-                        RestClient.service.getRouteList("ttc").enqueue(new Callback<RouteList>() {
+                        RestClient.service.getRouteList("ttc").enqueue(new Callback<RouteListResult>() {
                             @Override
-                            public void onResponse(Call<RouteList> call, retrofit2.Response<RouteList> response) {
+                            public void onResponse(Call<RouteListResult> call, retrofit2.Response<RouteListResult> response) {
                                 Log.d(TAG, "onResponse: ");
                             }
 
                             @Override
-                            public void onFailure(Call<RouteList> call, Throwable t) {
+                            public void onFailure(Call<RouteListResult> call, Throwable t) {
                                 Log.d(TAG, "onFailure: ");
                             }
                         });
@@ -72,6 +73,45 @@ public class MainActivity extends AppCompatActivity {
 
                             @Override
                             public void onFailure(Call<GetRouteResult> call, Throwable t) {
+                                Log.d(TAG, "onFailure: ");
+                            }
+                        });
+                        break;
+                    case 3:
+                        RestClient.service.getPredictions("ttc", "2488").enqueue(new Callback<PredictionsResult>() {
+                            @Override
+                            public void onResponse(Call<PredictionsResult> call, retrofit2.Response<PredictionsResult> response) {
+                                Log.d(TAG, "onResponse: ");
+                            }
+
+                            @Override
+                            public void onFailure(Call<PredictionsResult> call, Throwable t) {
+                                Log.d(TAG, "onFailure: ");
+                            }
+                        });
+                        break;
+                    case 4:
+                        RestClient.service.getPredictions("ttc", "2488", "199").enqueue(new Callback<PredictionsResult>() {
+                            @Override
+                            public void onResponse(Call<PredictionsResult> call, retrofit2.Response<PredictionsResult> response) {
+                                Log.d(TAG, "onResponse: ");
+                            }
+
+                            @Override
+                            public void onFailure(Call<PredictionsResult> call, Throwable t) {
+                                Log.d(TAG, "onFailure: ");
+                            }
+                        });
+                        break;
+                    case 5:
+                        RestClient.service.getPredictionsByTags("ttc", "199", "5464").enqueue(new Callback<PredictionsResult>() {
+                            @Override
+                            public void onResponse(Call<PredictionsResult> call, retrofit2.Response<PredictionsResult> response) {
+                                Log.d(TAG, "onResponse: ");
+                            }
+
+                            @Override
+                            public void onFailure(Call<PredictionsResult> call, Throwable t) {
                                 Log.d(TAG, "onFailure: ");
                             }
                         });
