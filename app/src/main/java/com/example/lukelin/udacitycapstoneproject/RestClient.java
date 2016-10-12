@@ -4,6 +4,7 @@ import com.example.lukelin.udacitycapstoneproject.pojos.AgencyListResult;
 import com.example.lukelin.udacitycapstoneproject.pojos.GetRouteResult;
 import com.example.lukelin.udacitycapstoneproject.pojos.PredictionsResult;
 import com.example.lukelin.udacitycapstoneproject.pojos.RouteListResult;
+import com.example.lukelin.udacitycapstoneproject.pojos.VehicleLocationResult;
 
 import retrofit2.Call;
 import retrofit2.Retrofit;
@@ -47,5 +48,8 @@ public class RestClient {
 
         @GET("publicXMLFeed?command=predictionsForMultiStops")
         Call<PredictionsResult> getPredictionsForMultiStops(@Query("a") String agency, @Query("stops") String... stops);
+
+        @GET("publicXMLFeed?command=vehicleLocations")
+        Call<VehicleLocationResult> getVehicleLocation(@Query("a") String agency, @Query("r") String routeTag, @Query("t") long epochTime);
     }
 }

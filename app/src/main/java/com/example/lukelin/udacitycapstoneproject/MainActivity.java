@@ -14,6 +14,7 @@ import com.example.lukelin.udacitycapstoneproject.pojos.AgencyListResult;
 import com.example.lukelin.udacitycapstoneproject.pojos.GetRouteResult;
 import com.example.lukelin.udacitycapstoneproject.pojos.PredictionsResult;
 import com.example.lukelin.udacitycapstoneproject.pojos.RouteListResult;
+import com.example.lukelin.udacitycapstoneproject.pojos.VehicleLocationResult;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -125,6 +126,19 @@ public class MainActivity extends AppCompatActivity {
 
                             @Override
                             public void onFailure(Call<PredictionsResult> call, Throwable t) {
+                                Log.d(TAG, "onFailure: ");
+                            }
+                        });
+                        break;
+                    case 7:
+                        RestClient.service.getVehicleLocation("ttc", "199", 0).enqueue(new Callback<VehicleLocationResult>() {
+                            @Override
+                            public void onResponse(Call<VehicleLocationResult> call, retrofit2.Response<VehicleLocationResult> response) {
+                                Log.d(TAG, "onResponse: ");
+                            }
+
+                            @Override
+                            public void onFailure(Call<VehicleLocationResult> call, Throwable t) {
                                 Log.d(TAG, "onFailure: ");
                             }
                         });
