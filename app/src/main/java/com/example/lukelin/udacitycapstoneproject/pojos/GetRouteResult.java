@@ -15,4 +15,8 @@ public class GetRouteResult {
 
     @Element(name = "route")
     private Route route;
+
+    public Route getRoute() {
+        return route;
+    }
 }

@@ -36,4 +36,9 @@ public class Route {
     private List<Direction> directionList;
     @ElementList(inline = true, required = false)
     private List<Path> pathList;
+
+
+    public String getTag() {
+        return tag;
+    }
 }

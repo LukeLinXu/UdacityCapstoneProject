@@ -18,4 +18,7 @@ public class RouteListResult {
     @ElementList(inline = true)
     private List<Route> routeList;
 
+    public List<Route> getRouteList() {
+        return routeList;
+    }
 }

@@ -13,11 +13,13 @@ import android.view.View;
 import com.example.lukelin.udacitycapstoneproject.pojos.AgencyListResult;
 import com.example.lukelin.udacitycapstoneproject.pojos.GetRouteResult;
 import com.example.lukelin.udacitycapstoneproject.pojos.PredictionsResult;
+import com.example.lukelin.udacitycapstoneproject.pojos.Route;
 import com.example.lukelin.udacitycapstoneproject.pojos.RouteListResult;
 import com.example.lukelin.udacitycapstoneproject.pojos.VehicleLocationResult;
 
 import retrofit2.Call;
 import retrofit2.Callback;
+import retrofit2.Response;
 
 public class MainActivity extends AppCompatActivity {
     private static final String TAG = "MainActivity";
@@ -55,6 +57,19 @@ public class MainActivity extends AppCompatActivity {
                         RestClient.service.getRouteList("ttc").enqueue(new Callback<RouteListResult>() {
                             @Override
                             public void onResponse(Call<RouteListResult> call, retrofit2.Response<RouteListResult> response) {
+                                for(Route route : response.body().getRouteList()){
+                                    RestClient.service.getRouteDetail("ttc", route.getTag()).enqueue(new Callback<GetRouteResult>() {
+                                        @Override
+                                        public void onResponse(Call<GetRouteResult> call, Response<GetRouteResult> response) {
+                                            Log.d(TAG, "LukeonResponse: " + response.body().getRoute().getTag());
+                                        }
+
+                                        @Override
+                                        public void onFailure(Call<GetRouteResult> call, Throwable t) {
+                                            Log.d(TAG, "LukeonFaile: " + t.getMessage());
+                                        }
+                                    });
+                                }
                                 Log.d(TAG, "onResponse: ");
                             }
 
