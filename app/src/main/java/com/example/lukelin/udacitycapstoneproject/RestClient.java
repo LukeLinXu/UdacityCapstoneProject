@@ -44,5 +44,8 @@ public class RestClient {
 
         @GET("publicXMLFeed?command=predictions")
         Call<PredictionsResult> getPredictionsByTags(@Query("a") String agency, @Query("r") String routeTag, @Query("s") String stopTag);
+
+        @GET("publicXMLFeed?command=predictionsForMultiStops")
+        Call<PredictionsResult> getPredictionsForMultiStops(@Query("a") String agency, @Query("stops") String... stops);
     }
 }

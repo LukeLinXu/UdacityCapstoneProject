@@ -1,7 +1,6 @@
 package com.example.lukelin.udacitycapstoneproject.pojos;
 
 import org.simpleframework.xml.Attribute;
-import org.simpleframework.xml.Element;
 import org.simpleframework.xml.ElementList;
 import org.simpleframework.xml.Root;
 
@@ -34,7 +33,7 @@ public class Predictions {
     @ElementList(inline = true, required = false)
     private List<Direction> directionList;
 
-    @Element(name = "message", required = false)
-    private Message message;
+    @ElementList(inline = true, required = false)
+    private List<Message> messageList;
 
 }

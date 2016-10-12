@@ -116,6 +116,19 @@ public class MainActivity extends AppCompatActivity {
                             }
                         });
                         break;
+                    case 6:
+                        RestClient.service.getPredictionsForMultiStops("ttc", new String[]{"199|5464", "39|5950"}).enqueue(new Callback<PredictionsResult>() {
+                            @Override
+                            public void onResponse(Call<PredictionsResult> call, retrofit2.Response<PredictionsResult> response) {
+                                Log.d(TAG, "onResponse: ");
+                            }
+
+                            @Override
+                            public void onFailure(Call<PredictionsResult> call, Throwable t) {
+                                Log.d(TAG, "onFailure: ");
+                            }
+                        });
+                        break;
                 }
                 time++;
 
