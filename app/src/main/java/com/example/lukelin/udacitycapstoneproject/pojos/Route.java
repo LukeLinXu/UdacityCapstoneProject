@@ -41,4 +41,12 @@ public class Route {
     public String getTag() {
         return tag;
     }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public List<Stop> getStopList() {
+        return stopList;
+    }
 }

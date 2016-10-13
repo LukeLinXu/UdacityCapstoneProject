@@ -22,4 +22,20 @@ public class Stop {
     private double lon;
     @Attribute(name = "stopId", required = false)
     private int stopId;
+
+    public String getTag() {
+        return tag;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public double getLat() {
+        return lat;
+    }
+
+    public double getLon() {
+        return lon;
+    }
 }

@@ -14,8 +14,7 @@ public class RouteProvider {
     public static class Routes {
         @ContentUri(
             path = "routes",
-            type = "vnd.android.cursor.dir/route",
-            defaultSort = RouteColumns.TAG + " ASC")
+            type = "vnd.android.cursor.dir/route")
 
         public static final Uri CONTENT_URI = Uri.parse("content://" + AUTHORITY + "/routes");
 
