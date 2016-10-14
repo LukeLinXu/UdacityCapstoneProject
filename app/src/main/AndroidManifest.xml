@@ -28,6 +28,8 @@
 
         <activity android:name=".Activity.RouteDetailActvity"/>
 
+        <activity android:name=".Activity.StopDetailActvity"/>
+
         <provider
             android:authorities="com.example.lukelin.udacitycapstoneproject.data.RouteProvider"
             android:name="com.example.lukelin.udacitycapstoneproject.data.generated.RouteProvider"

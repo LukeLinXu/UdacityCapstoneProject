@@ -7,5 +7,6 @@ package com.example.lukelin.udacitycapstoneproject.util;
 public class Extras {
 
     public static final String IS_LOADED = "isloaded";
+    public static final String DATA = "data";
     public static SharedPrefPersistence sharedPrefPersistence;
 }

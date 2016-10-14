@@ -12,6 +12,8 @@ public class RouteDetailActvity extends BaseFragmentActivity{
 
     @Override
     Fragment getFragment() {
-        return new RouteDetailFragment();
+        RouteDetailFragment routeDetailFragment = new RouteDetailFragment();
+        routeDetailFragment.setArguments(getIntent().getExtras());
+        return routeDetailFragment;
     }
 }

@@ -20,6 +20,7 @@ import com.example.lukelin.udacitycapstoneproject.Activity.RouteDetailActvity;
 import com.example.lukelin.udacitycapstoneproject.R;
 import com.example.lukelin.udacitycapstoneproject.data.RouteColumns;
 import com.example.lukelin.udacitycapstoneproject.data.RouteProvider;
+import com.example.lukelin.udacitycapstoneproject.util.Extras;
 
 /**
  * Created by lukelin on 2016-10-14.
@@ -66,12 +67,13 @@ public class RouteListFragment extends Fragment implements LoaderManager.LoaderC
             @Override
             public void onBindViewHolder(RouteListViewHolder holder, int position) {
                 if(data.moveToPosition(position)){
-                    holder.mTag.setText(data.getString(data.getColumnIndex(RouteColumns.TAG)));
+                    final String tag = data.getString(data.getColumnIndex(RouteColumns.TAG));
+                    holder.mTag.setText(tag);
                     holder.mTitle.setText(data.getString(data.getColumnIndex(RouteColumns.TITLE)));
                     holder.itemView.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
-                            startActivity(new Intent(getActivity(), RouteDetailActvity.class));
+                            startActivity(new Intent(getActivity(), RouteDetailActvity.class).putExtra(Extras.DATA, tag));
                         }
                     });
                 }

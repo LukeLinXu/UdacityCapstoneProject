@@ -18,4 +18,7 @@ public class PredictionsResult {
     @ElementList(inline = true)
     private List<Predictions> predictionsList;
 
+    public List<Predictions> getPredictionsList() {
+        return predictionsList;
+    }
 }
