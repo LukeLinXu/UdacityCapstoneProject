@@ -1,4 +1,4 @@
-package com.example.lukelin.udacitycapstoneproject;
+package com.example.lukelin.udacitycapstoneproject.Activity;
 
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
@@ -8,6 +8,10 @@ import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+
+import com.example.lukelin.udacitycapstoneproject.R;
+import com.example.lukelin.udacitycapstoneproject.Fragment.RouteListFragment;
+import com.example.lukelin.udacitycapstoneproject.Fragment.SurroundingStopFragment;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -56,6 +60,8 @@ public class MainActivity extends AppCompatActivity {
 
     private void setupViewPager() {
         adapter = new SimpleAdapter(getSupportFragmentManager());
+        adapter.addFragment(new RouteListFragment(), "RouteList0");
+        adapter.addFragment(new SurroundingStopFragment(), "Surround");
         adapter.addFragment(new RouteListFragment(), "RouteList");
         viewPager.setAdapter(adapter);
     }

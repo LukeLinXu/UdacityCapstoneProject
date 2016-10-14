@@ -1,4 +1,4 @@
-package com.example.lukelin.udacitycapstoneproject;
+package com.example.lukelin.udacitycapstoneproject.util;
 
 /**
  * Created by LukeLin on 2016-10-13.

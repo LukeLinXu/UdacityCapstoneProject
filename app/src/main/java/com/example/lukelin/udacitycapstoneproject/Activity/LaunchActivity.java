@@ -1,9 +1,13 @@
-package com.example.lukelin.udacitycapstoneproject;
+package com.example.lukelin.udacitycapstoneproject.Activity;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
+
+import com.example.lukelin.udacitycapstoneproject.util.Extras;
+import com.example.lukelin.udacitycapstoneproject.R;
+import com.example.lukelin.udacitycapstoneproject.util.Utils;
 
 public class LaunchActivity extends AppCompatActivity {
 

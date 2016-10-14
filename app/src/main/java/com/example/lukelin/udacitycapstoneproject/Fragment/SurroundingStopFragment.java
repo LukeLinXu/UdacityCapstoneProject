@@ -1,4 +1,4 @@
-package com.example.lukelin.udacitycapstoneproject;
+package com.example.lukelin.udacitycapstoneproject.Fragment;
 
 import android.database.Cursor;
 import android.os.Bundle;
@@ -15,16 +15,21 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.example.lukelin.udacitycapstoneproject.R;
 import com.example.lukelin.udacitycapstoneproject.data.RouteColumns;
-import com.example.lukelin.udacitycapstoneproject.data.RouteProvider;
+import com.example.lukelin.udacitycapstoneproject.data.StopColumns;
+import com.example.lukelin.udacitycapstoneproject.data.StopProvider;
 
 /**
  * Created by lukelin on 2016-10-14.
  */
 
-public class RouteListFragment extends Fragment implements LoaderManager.LoaderCallbacks<Cursor>{
+public class SurroundingStopFragment extends Fragment implements LoaderManager.LoaderCallbacks<Cursor>{
     private static final int CURSOR_LOADER_ID = 0;
     private RecyclerView recyclerView;
+    private double lat = 43.645615;
+    private double lon = -79.3862538;
+    private double range = 0.003;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -42,15 +47,25 @@ public class RouteListFragment extends Fragment implements LoaderManager.LoaderC
 
     @Override
     public Loader<Cursor> onCreateLoader(int id, Bundle args) {
-        return new CursorLoader(getActivity(), RouteProvider.Routes.CONTENT_URI,
-                new String[]{RouteColumns.TAG, RouteColumns.TITLE},
-                null,
+//        return new CursorLoader(getActivity(), StopProvider.Stops.CONTENT_URI,
+//                new String[]{StopColumns.TAG, StopColumns.TITLE, StopColumns.LAT, StopColumns.LON},
+//                StopColumns.LAT + " < ? AND "+ StopColumns.LON + " < ?",
+//                new String[]{"43.645615", "-79.3862538"},
+//                null);
+
+        String latRang = (lat - range) + " AND " + (lat + range);
+        String lonRang = (lon - range) + " AND " + (lon + range);
+        return new CursorLoader(getActivity(), StopProvider.Stops.CONTENT_URI,
+                new String[]{StopColumns.TAG, StopColumns.TITLE, StopColumns.LAT, StopColumns.LON},
+                "( "+StopColumns.LAT+" BETWEEN "+latRang+")"+
+                        " AND "+
+                        "( "+StopColumns.LON+" BETWEEN "+lonRang+")",
                 null,
                 null);
     }
 
     @Override
-    public void onLoadFinished(android.support.v4.content.Loader<Cursor> loader, final Cursor data) {
+    public void onLoadFinished(Loader<Cursor> loader, final Cursor data) {
         Log.d("Luke", "LukeonLoadFinished: "+data.getCount());
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         recyclerView.setAdapter(new RecyclerView.Adapter<RouteListViewHolder>() {
@@ -76,7 +91,7 @@ public class RouteListFragment extends Fragment implements LoaderManager.LoaderC
     }
 
     @Override
-    public void onLoaderReset(android.support.v4.content.Loader<Cursor> loader) {
+    public void onLoaderReset(Loader<Cursor> loader) {
 
     }
 

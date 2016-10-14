@@ -1,4 +1,4 @@
-package com.example.lukelin.udacitycapstoneproject;
+package com.example.lukelin.udacitycapstoneproject.util;
 
 import android.app.Activity;
 import android.content.ContentProviderOperation;
@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.content.OperationApplicationException;
 import android.os.RemoteException;
 
+import com.example.lukelin.udacitycapstoneproject.Activity.MainActivity;
 import com.example.lukelin.udacitycapstoneproject.data.RouteColumns;
 import com.example.lukelin.udacitycapstoneproject.data.RouteProvider;
 import com.example.lukelin.udacitycapstoneproject.data.StopColumns;

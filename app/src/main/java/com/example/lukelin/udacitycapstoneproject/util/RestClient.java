@@ -1,4 +1,4 @@
-package com.example.lukelin.udacitycapstoneproject;
+package com.example.lukelin.udacitycapstoneproject.util;
 
 import com.example.lukelin.udacitycapstoneproject.pojos.AgencyListResult;
 import com.example.lukelin.udacitycapstoneproject.pojos.GetRouteResult;
