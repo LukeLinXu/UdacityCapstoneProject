@@ -1,7 +1,9 @@
 package com.example.lukelin.udacitycapstoneproject;
 
+import android.app.Activity;
 import android.content.ContentProviderOperation;
 import android.content.Context;
+import android.content.Intent;
 import android.content.OperationApplicationException;
 import android.os.RemoteException;
 
@@ -76,6 +78,7 @@ public class Utils {
                                     context.getContentResolver().applyBatch(StopProvider.AUTHORITY,
                                             batchOperations1);
                                     Extras.sharedPrefPersistence.save(Extras.IS_LOADED, String.valueOf(true));
+                                    startMainActivity(context);
                                 } catch (RemoteException e) {
                                     e.printStackTrace();
                                     Extras.sharedPrefPersistence.save(Extras.IS_LOADED, String.valueOf(false));
@@ -108,5 +111,12 @@ public class Utils {
 
             }
         });
+    }
+
+    public static void startMainActivity(Context context) {
+        if(context instanceof Activity){
+            ((Activity) context).finish();
+        }
+        context.startActivity(new Intent(context, MainActivity.class));
     }
 }
