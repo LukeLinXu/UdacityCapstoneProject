@@ -10,6 +10,8 @@ public class StopColumns {
     public static final String TAG = "tag";
     @DataType(DataType.Type.TEXT) @NotNull
     public static final String TITLE = "title";
+    @DataType(DataType.Type.TEXT) @NotNull
+    public static final String ID = "id";
     @DataType(DataType.Type.REAL) @NotNull
     public static final String LAT = "lat";
     @DataType(DataType.Type.REAL) @NotNull

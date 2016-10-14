@@ -1,6 +1,9 @@
 package com.example.lukelin.udacitycapstoneproject.util;
 
 import android.app.Activity;
+import android.app.Fragment;
+import android.app.FragmentManager;
+import android.app.FragmentTransaction;
 import android.content.ContentProviderOperation;
 import android.content.Context;
 import android.content.Intent;
@@ -47,6 +50,7 @@ public class Utils {
         builder.withValue(StopColumns.TITLE, stop.getTitle());
         builder.withValue(StopColumns.LAT, stop.getLat());
         builder.withValue(StopColumns.LON, stop.getLon());
+        builder.withValue(StopColumns.ID, stop.getStopId());
         return builder.build();
     }
 
@@ -119,5 +123,16 @@ public class Utils {
             ((Activity) context).finish();
         }
         context.startActivity(new Intent(context, MainActivity.class));
+    }
+
+    public static void switchFragment(FragmentManager fragmentManager, Fragment fragment, int fragmentContainerId) {
+        switchFragment(fragmentManager, fragment, fragmentContainerId, null);
+    }
+
+    public static void switchFragment(FragmentManager fragmentManager, Fragment fragment, int fragmentContainerId,
+                                      String tag) {
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        fragmentTransaction.replace(fragmentContainerId, fragment, tag);
+        fragmentTransaction.commitAllowingStateLoss();
     }
 }

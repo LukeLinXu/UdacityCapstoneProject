@@ -1,5 +1,6 @@
 package com.example.lukelin.udacitycapstoneproject.Fragment;
 
+import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -15,6 +16,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.example.lukelin.udacitycapstoneproject.Activity.RouteDetailActvity;
 import com.example.lukelin.udacitycapstoneproject.R;
 import com.example.lukelin.udacitycapstoneproject.data.RouteColumns;
 import com.example.lukelin.udacitycapstoneproject.data.RouteProvider;
@@ -66,6 +68,12 @@ public class RouteListFragment extends Fragment implements LoaderManager.LoaderC
                 if(data.moveToPosition(position)){
                     holder.mTag.setText(data.getString(data.getColumnIndex(RouteColumns.TAG)));
                     holder.mTitle.setText(data.getString(data.getColumnIndex(RouteColumns.TITLE)));
+                    holder.itemView.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            startActivity(new Intent(getActivity(), RouteDetailActvity.class));
+                        }
+                    });
                 }
             }
 

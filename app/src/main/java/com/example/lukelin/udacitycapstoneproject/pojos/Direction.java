@@ -33,4 +33,15 @@ public class Direction {
     @ElementList(inline = true, required = false)
     private List<Prediction> predictionList;
 
+    public String getTitle() {
+        return title;
+    }
+
+    public String getBranch() {
+        return branch;
+    }
+
+    public List<Stop> getStopList() {
+        return stopList;
+    }
 }

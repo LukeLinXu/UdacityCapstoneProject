@@ -49,4 +49,8 @@ public class Route {
     public List<Stop> getStopList() {
         return stopList;
     }
+
+    public List<Direction> getDirectionList() {
+        return directionList;
+    }
 }

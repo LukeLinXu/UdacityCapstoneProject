@@ -38,4 +38,8 @@ public class Stop {
     public double getLon() {
         return lon;
     }
+
+    public int getStopId() {
+        return stopId;
+    }
 }

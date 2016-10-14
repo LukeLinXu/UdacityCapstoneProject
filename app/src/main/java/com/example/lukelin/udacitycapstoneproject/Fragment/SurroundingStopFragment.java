@@ -16,7 +16,6 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.example.lukelin.udacitycapstoneproject.R;
-import com.example.lukelin.udacitycapstoneproject.data.RouteColumns;
 import com.example.lukelin.udacitycapstoneproject.data.StopColumns;
 import com.example.lukelin.udacitycapstoneproject.data.StopProvider;
 
@@ -56,7 +55,7 @@ public class SurroundingStopFragment extends Fragment implements LoaderManager.L
         String latRang = (lat - range) + " AND " + (lat + range);
         String lonRang = (lon - range) + " AND " + (lon + range);
         return new CursorLoader(getActivity(), StopProvider.Stops.CONTENT_URI,
-                new String[]{StopColumns.TAG, StopColumns.TITLE, StopColumns.LAT, StopColumns.LON},
+                new String[]{StopColumns.TAG, StopColumns.TITLE, StopColumns.LAT, StopColumns.LON, StopColumns.ID},
                 "( "+StopColumns.LAT+" BETWEEN "+latRang+")"+
                         " AND "+
                         "( "+StopColumns.LON+" BETWEEN "+lonRang+")",
@@ -68,18 +67,18 @@ public class SurroundingStopFragment extends Fragment implements LoaderManager.L
     public void onLoadFinished(Loader<Cursor> loader, final Cursor data) {
         Log.d("Luke", "LukeonLoadFinished: "+data.getCount());
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-        recyclerView.setAdapter(new RecyclerView.Adapter<RouteListViewHolder>() {
+        recyclerView.setAdapter(new RecyclerView.Adapter<StopListViewHolder>() {
             @Override
-            public RouteListViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+            public StopListViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
                 View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.route_list_item, parent, false);
-                return new RouteListViewHolder(v);
+                return new StopListViewHolder(v);
             }
 
             @Override
-            public void onBindViewHolder(RouteListViewHolder holder, int position) {
+            public void onBindViewHolder(StopListViewHolder holder, int position) {
                 if(data.moveToPosition(position)){
-                    holder.mTag.setText(data.getString(data.getColumnIndex(RouteColumns.TAG)));
-                    holder.mTitle.setText(data.getString(data.getColumnIndex(RouteColumns.TITLE)));
+                    holder.mTag.setText(data.getString(data.getColumnIndex(StopColumns.TAG)));
+                    holder.mTitle.setText(data.getString(data.getColumnIndex(StopColumns.TITLE)));
                 }
             }
 
@@ -95,10 +94,10 @@ public class SurroundingStopFragment extends Fragment implements LoaderManager.L
 
     }
 
-    private class RouteListViewHolder extends RecyclerView.ViewHolder{
+    private class StopListViewHolder extends RecyclerView.ViewHolder{
         public TextView mTag, mTitle;
 
-        public RouteListViewHolder(View itemView) {
+        public StopListViewHolder(View itemView) {
             super(itemView);
             mTag = (TextView) itemView.findViewById(R.id.route_list_item_tag);
             mTitle = (TextView) itemView.findViewById(R.id.route_list_item_title);

@@ -26,6 +26,8 @@
             </intent-filter>
         </activity>
 
+        <activity android:name=".Activity.RouteDetailActvity"/>
+
         <provider
             android:authorities="com.example.lukelin.udacitycapstoneproject.data.RouteProvider"
             android:name="com.example.lukelin.udacitycapstoneproject.data.generated.RouteProvider"
