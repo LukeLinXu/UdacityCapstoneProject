@@ -15,7 +15,7 @@ public class MainActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         String read = Extras.sharedPrefPersistence.read(Extras.IS_LOADED);
-        if(read != null && Boolean.getBoolean(read)){
+        if(read != null && Boolean.valueOf(read)){
 
         }else {
             Utils.firstLoad(this);
