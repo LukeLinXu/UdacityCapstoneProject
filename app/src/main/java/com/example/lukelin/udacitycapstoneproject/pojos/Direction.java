@@ -44,4 +44,8 @@ public class Direction {
     public List<Stop> getStopList() {
         return stopList;
     }
+
+    public List<Prediction> getPredictionList() {
+        return predictionList;
+    }
 }

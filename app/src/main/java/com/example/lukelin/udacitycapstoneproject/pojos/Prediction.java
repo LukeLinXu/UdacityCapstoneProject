@@ -30,4 +30,24 @@ public class Prediction {
     private String block;
     @Attribute(name = "tripTag", required = false)
     private String tripTag;
+
+    public long getEpochTime() {
+        return epochTime;
+    }
+
+    public int getSeconds() {
+        return seconds;
+    }
+
+    public int getMinutes() {
+        return minutes;
+    }
+
+    public String getBranch() {
+        return branch;
+    }
+
+    public String getDirTag() {
+        return dirTag;
+    }
 }

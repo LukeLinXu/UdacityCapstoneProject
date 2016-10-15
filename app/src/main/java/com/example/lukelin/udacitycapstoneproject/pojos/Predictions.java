@@ -4,6 +4,7 @@ import org.simpleframework.xml.Attribute;
 import org.simpleframework.xml.ElementList;
 import org.simpleframework.xml.Root;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -36,4 +37,8 @@ public class Predictions {
     @ElementList(inline = true, required = false)
     private List<Message> messageList;
 
+    public List<Direction> getDirectionList() {
+        if (directionList == null) return new ArrayList<>();
+        return directionList;
+    }
 }

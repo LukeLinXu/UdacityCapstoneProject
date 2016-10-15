@@ -1,5 +1,6 @@
 package com.example.lukelin.udacitycapstoneproject.Fragment;
 
+import android.content.Context;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -10,27 +11,30 @@ import android.widget.TextView;
 
 import com.example.lukelin.udacitycapstoneproject.R;
 import com.example.lukelin.udacitycapstoneproject.pojos.Direction;
+import com.example.lukelin.udacitycapstoneproject.pojos.Prediction;
 import com.example.lukelin.udacitycapstoneproject.pojos.Predictions;
 import com.example.lukelin.udacitycapstoneproject.pojos.PredictionsResult;
-import com.example.lukelin.udacitycapstoneproject.pojos.Stop;
 import com.example.lukelin.udacitycapstoneproject.util.Extras;
 import com.example.lukelin.udacitycapstoneproject.util.RestClient;
 
+import java.util.ArrayList;
 import java.util.List;
 
+import ca.barrenechea.widget.recyclerview.decoration.StickyHeaderAdapter;
+import ca.barrenechea.widget.recyclerview.decoration.StickyHeaderDecoration;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 import rx.Observable;
 import rx.Subscriber;
 
-import static android.R.attr.direction;
-
 /**
  * Created by lukelin on 2016-10-14.
  */
 
 public class StopDetailFragment extends ClickToRefreshFragmentBase<List<Predictions>> {
+
+    private ArrayList<Prediction> predictions = new ArrayList<>();
 
     @Override
     protected Observable<List<Predictions>> doRefresh() {
@@ -55,28 +59,18 @@ public class StopDetailFragment extends ClickToRefreshFragmentBase<List<Predicti
 
     @Override
     protected void refreshUI(RelativeLayout mainContent, final List<Predictions> object) {
+        for(Predictions p : object){
+            for(Direction d : p.getDirectionList()){
+                predictions.addAll(d.getPredictionList());
+            }
+        }
         RecyclerView recyclerView = (RecyclerView) mainContent.findViewById(R.id.route_detail_fragment_directions);
-
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-        recyclerView.setAdapter(new RecyclerView.Adapter<StopListViewHolder>() {
-            @Override
-            public StopListViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-                View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.route_list_item, parent, false);
-                return new StopListViewHolder(v);
-            }
-
-            @Override
-            public void onBindViewHolder(StopListViewHolder holder, int position) {
-                Predictions predictions = object.get(position);
-                holder.mTag.setText(direction.getBranch());
-                holder.mTitle.setText(direction.getTitle());
-            }
-
-            @Override
-            public int getItemCount() {
-                return object.getDirectionList().size();
-            }
-        });
+        StickyTestAdapter stickyTestAdapter = new StickyTestAdapter(getActivity());
+        StickyHeaderDecoration decor;
+        decor = new StickyHeaderDecoration(stickyTestAdapter);
+        recyclerView.setAdapter(stickyTestAdapter);
+        recyclerView.addItemDecoration(decor);
     }
 
     @Override
@@ -84,13 +78,71 @@ public class StopDetailFragment extends ClickToRefreshFragmentBase<List<Predicti
         return R.layout.route_detail_fragment;
     }
 
-    private class StopListViewHolder extends RecyclerView.ViewHolder{
-        public TextView mTag, mTitle;
+    public class StickyTestAdapter extends RecyclerView.Adapter<StickyTestAdapter.ViewHolder> implements
+            StickyHeaderAdapter<StickyTestAdapter.HeaderHolder> {
 
-        public StopListViewHolder(View itemView) {
-            super(itemView);
-            mTag = (TextView) itemView.findViewById(R.id.route_list_item_tag);
-            mTitle = (TextView) itemView.findViewById(R.id.route_list_item_title);
+        private LayoutInflater mInflater;
+
+        public StickyTestAdapter(Context context) {
+            mInflater = LayoutInflater.from(context);
+        }
+
+        @Override
+        public ViewHolder onCreateViewHolder(ViewGroup viewGroup, int i) {
+            final View view = mInflater.inflate(R.layout.prediction_item, viewGroup, false);
+
+            return new ViewHolder(view);
+        }
+
+        @Override
+        public void onBindViewHolder(ViewHolder viewHolder, int i) {
+            viewHolder.item.setText("Item " + predictions.get(i).getMinutes());
+        }
+
+        @Override
+        public int getItemCount() {
+            return predictions.size();
+        }
+
+        @Override
+        public long getHeaderId(int position) {
+//            if (position == 0) { // don't show header for first item
+//                return StickyHeaderDecoration.NO_HEADER_ID;
+//            }
+//            return (long) position / 7;
+            return predictions.get(position).getDirTag().hashCode();
+        }
+
+        @Override
+        public HeaderHolder onCreateHeaderViewHolder(ViewGroup parent) {
+            final View view = mInflater.inflate(R.layout.prediction_header, parent, false);
+            return new HeaderHolder(view);
+        }
+
+        @Override
+        public void onBindHeaderViewHolder(HeaderHolder viewholder, int position) {
+            viewholder.header.setText("Header " + predictions.get(position).getDirTag());
+        }
+
+
+        class ViewHolder extends RecyclerView.ViewHolder {
+            public TextView item;
+
+            public ViewHolder(View itemView) {
+                super(itemView);
+
+                item = (TextView) itemView.findViewById(R.id.prediction_item_title);
+            }
+        }
+
+        class HeaderHolder extends RecyclerView.ViewHolder {
+            public TextView header;
+
+            public HeaderHolder(View itemView) {
+                super(itemView);
+
+                header = (TextView) itemView.findViewById(R.id.prediction_header_title);
+            }
         }
     }
 }

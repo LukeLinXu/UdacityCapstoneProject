@@ -1,5 +1,6 @@
 package com.example.lukelin.udacitycapstoneproject.Fragment;
 
+import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -15,9 +16,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.example.lukelin.udacitycapstoneproject.Activity.StopDetailActvity;
 import com.example.lukelin.udacitycapstoneproject.R;
 import com.example.lukelin.udacitycapstoneproject.data.StopColumns;
 import com.example.lukelin.udacitycapstoneproject.data.StopProvider;
+import com.example.lukelin.udacitycapstoneproject.util.Extras;
 
 /**
  * Created by lukelin on 2016-10-14.
@@ -26,9 +29,9 @@ import com.example.lukelin.udacitycapstoneproject.data.StopProvider;
 public class SurroundingStopFragment extends Fragment implements LoaderManager.LoaderCallbacks<Cursor>{
     private static final int CURSOR_LOADER_ID = 0;
     private RecyclerView recyclerView;
-    private double lat = 43.645615;
-    private double lon = -79.3862538;
-    private double range = 0.003;
+    private double lat = 43.7967125;
+    private double lon = -79.312078;
+    private double range = 0.005;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -79,6 +82,13 @@ public class SurroundingStopFragment extends Fragment implements LoaderManager.L
                 if(data.moveToPosition(position)){
                     holder.mTag.setText(data.getString(data.getColumnIndex(StopColumns.TAG)));
                     holder.mTitle.setText(data.getString(data.getColumnIndex(StopColumns.TITLE)));
+                    final String stopId = data.getString(data.getColumnIndex(StopColumns.ID));
+                    holder.itemView.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            startActivity(new Intent(getActivity(), StopDetailActvity.class).putExtra(Extras.DATA, stopId));
+                        }
+                    });
                 }
             }
 
