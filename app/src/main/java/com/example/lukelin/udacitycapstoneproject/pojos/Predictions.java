@@ -41,9 +41,6 @@ public class Predictions {
 
     public List<Direction> getDirectionList() {
         if (directionList == null) return new ArrayList<>();
-        for(Direction direction : directionList){
-            direction.setRouteTag(routeTag);
-        }
         return directionList;
     }
 
@@ -51,5 +48,21 @@ public class Predictions {
         Gson gson = new Gson();
         String content = gson.toJson(getDirectionList());
         return new Favorite(routeTag+"|"+stopTag, routeTitle, stopTitle, String.valueOf(timestamp), content);
+    }
+
+    public String getRouteTag() {
+        return routeTag;
+    }
+
+    public String getRouteTitle() {
+        return routeTitle;
+    }
+
+    public String getStopTitle() {
+        return stopTitle;
+    }
+
+    public String getStopTag() {
+        return stopTag;
     }
 }

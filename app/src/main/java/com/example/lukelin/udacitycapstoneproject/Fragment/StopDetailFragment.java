@@ -1,8 +1,8 @@
 package com.example.lukelin.udacitycapstoneproject.Fragment;
 
-import android.content.Context;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.format.DateUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,12 +18,8 @@ import com.example.lukelin.udacitycapstoneproject.pojos.PredictionsResult;
 import com.example.lukelin.udacitycapstoneproject.util.Extras;
 import com.example.lukelin.udacitycapstoneproject.util.RestClient;
 
-import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
-import ca.barrenechea.widget.recyclerview.decoration.StickyHeaderAdapter;
-import ca.barrenechea.widget.recyclerview.decoration.StickyHeaderDecoration;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -35,8 +31,6 @@ import rx.Subscriber;
  */
 
 public class StopDetailFragment extends ClickToRefreshFragmentBase<List<Predictions>> {
-
-    private ArrayList<Prediction> predictions = new ArrayList<>();
 
     @Override
     protected Observable<List<Predictions>> doRefresh() {
@@ -61,18 +55,10 @@ public class StopDetailFragment extends ClickToRefreshFragmentBase<List<Predicti
 
     @Override
     protected void refreshUI(RelativeLayout mainContent, final List<Predictions> object) {
-        for(Predictions p : object){
-            for(Direction d : p.getDirectionList()){
-                predictions.addAll(d.getPredictionList());
-            }
-        }
         RecyclerView recyclerView = (RecyclerView) mainContent.findViewById(R.id.route_detail_fragment_directions);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-        StickyTestAdapter stickyTestAdapter = new StickyTestAdapter(getActivity());
-        StickyHeaderDecoration decor;
-        decor = new StickyHeaderDecoration(stickyTestAdapter);
-        recyclerView.setAdapter(stickyTestAdapter);
-        recyclerView.addItemDecoration(decor);
+        PredictionsAdapter predictionsAdapter = new PredictionsAdapter(object);
+        recyclerView.setAdapter(predictionsAdapter);
     }
 
     @Override
@@ -80,75 +66,136 @@ public class StopDetailFragment extends ClickToRefreshFragmentBase<List<Predicti
         return R.layout.route_detail_fragment;
     }
 
-    public class StickyTestAdapter extends RecyclerView.Adapter<StickyTestAdapter.ViewHolder> implements
-            StickyHeaderAdapter<StickyTestAdapter.HeaderHolder> {
+    public class PredictionsAdapter extends RecyclerView.Adapter<PredictionsHolder>{
 
-        private LayoutInflater mInflater;
+        private List<Predictions> predictionsList;
+        public PredictionsAdapter(List<Predictions> predictionsList) {
 
-        public StickyTestAdapter(Context context) {
-            mInflater = LayoutInflater.from(context);
+            this.predictionsList = predictionsList;
         }
 
         @Override
-        public ViewHolder onCreateViewHolder(ViewGroup viewGroup, int i) {
-            final View view = mInflater.inflate(R.layout.prediction_item, viewGroup, false);
-
-            return new ViewHolder(view);
+        public PredictionsHolder onCreateViewHolder(ViewGroup viewGroup, int i) {
+            final View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.predictions_item, viewGroup, false);
+            return new PredictionsHolder(view);
         }
 
         @Override
-        public void onBindViewHolder(ViewHolder viewHolder, int i) {
-            viewHolder.time.setText(new Date(predictions.get(i).getEpochTime()).toString());
-            viewHolder.countDown.setText(predictions.get(i).getMinutes()+"");
+        public void onBindViewHolder(PredictionsHolder viewHolder, int i) {
+            viewHolder.setData(predictionsList.get(i));
         }
 
         @Override
         public int getItemCount() {
-            return predictions.size();
+            return predictionsList.size();
+        }
+
+    }
+
+    class PredictionsHolder extends RecyclerView.ViewHolder {
+        private TextView tag;
+        private TextView header;
+        private CheckBox favoriteCheckbox;
+        private RecyclerView recyclerView;
+
+        public PredictionsHolder(View itemView) {
+            super(itemView);
+            tag = (TextView) itemView.findViewById(R.id.predictions_item_tag);
+            header = (TextView) itemView.findViewById(R.id.predictions_item_route_title);
+            favoriteCheckbox = (CheckBox) itemView.findViewById(R.id.predictions_item_favorite_checkbox);
+            recyclerView = (RecyclerView) itemView.findViewById(R.id.predictions_item_recyclerview);
+        }
+
+        public void setData(Predictions data) {
+            tag.setText(data.getRouteTag());
+            header.setText(data.getRouteTitle());
+            favoriteCheckbox.setChecked(true);
+            recyclerView.setLayoutManager(new LinearLayoutManager(recyclerView.getContext()));
+            recyclerView.setAdapter(new DirectionAdapter(data.getDirectionList()));
+        }
+    }
+
+    public class DirectionAdapter extends RecyclerView.Adapter<DirectionsHolder>{
+        private List<Direction> directionList;
+
+        public DirectionAdapter(List<Direction> directionList) {
+            this.directionList = directionList;
         }
 
         @Override
-        public long getHeaderId(int position) {
-            return predictions.get(position).getTitle().hashCode();
+        public DirectionsHolder onCreateViewHolder(ViewGroup viewGroup, int i) {
+            final View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.direction_item, viewGroup, false);
+            return new DirectionsHolder(view);
         }
 
         @Override
-        public HeaderHolder onCreateHeaderViewHolder(ViewGroup parent) {
-            final View view = mInflater.inflate(R.layout.prediction_header, parent, false);
-            return new HeaderHolder(view);
+        public void onBindViewHolder(DirectionsHolder viewHolder, int i) {
+            viewHolder.setData(directionList.get(i));
         }
 
         @Override
-        public void onBindHeaderViewHolder(HeaderHolder viewholder, int position) {
-            viewholder.tag.setText(predictions.get(position).getRouteTag());
-            viewholder.header.setText(predictions.get(position).getTitle());
+        public int getItemCount() {
+            return directionList.size();
         }
 
+    }
 
-        class ViewHolder extends RecyclerView.ViewHolder {
-            public TextView time;
-            public TextView countDown;
+    class DirectionsHolder extends RecyclerView.ViewHolder {
+        private TextView header;
+        private RecyclerView recyclerView;
 
-            public ViewHolder(View itemView) {
-                super(itemView);
-                countDown = (TextView) itemView.findViewById(R.id.prediction_item_countdown);
-                time = (TextView) itemView.findViewById(R.id.prediction_item_time);
-            }
+        public DirectionsHolder(View itemView) {
+            super(itemView);
+            header = (TextView) itemView.findViewById(R.id.direction_item_route_title);
+            recyclerView = (RecyclerView) itemView.findViewById(R.id.direction_item_recyclerview);
         }
 
-        class HeaderHolder extends RecyclerView.ViewHolder {
-            public TextView tag;
-            public TextView header;
-            public CheckBox favoriteCheckbox;
+        public void setData(Direction data) {
+            header.setText(data.getTitle());
+            recyclerView.setLayoutManager(new LinearLayoutManager(recyclerView.getContext()));
+            recyclerView.setAdapter(new PredictionAdapter(data.getPredictionList()));
+        }
+    }
 
-            public HeaderHolder(View itemView) {
-                super(itemView);
+    public class PredictionAdapter extends RecyclerView.Adapter<PredictionViewHolder>{
 
-                tag = (TextView) itemView.findViewById(R.id.prediction_header_tag);
-                header = (TextView) itemView.findViewById(R.id.prediction_header_title);
-                favoriteCheckbox = (CheckBox) itemView.findViewById(R.id.prediction_header_favorite_checkbox);
-                favoriteCheckbox.setChecked(true);
-            }
+        private List<Prediction> predictionList;
+        public PredictionAdapter(List<Prediction> predictionList) {
+
+            this.predictionList = predictionList;
+        }
+
+        @Override
+        public PredictionViewHolder onCreateViewHolder(ViewGroup viewGroup, int i) {
+            final View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.prediction_item, viewGroup, false);
+            return new PredictionViewHolder(view);
+        }
+
+        @Override
+        public void onBindViewHolder(PredictionViewHolder viewHolder, int i) {
+            viewHolder.setData(predictionList.get(i));
+        }
+
+        @Override
+        public int getItemCount() {
+            return predictionList.size();
+        }
+
+    }
+
+    class PredictionViewHolder extends RecyclerView.ViewHolder {
+        private TextView time;
+        private TextView countDown;
+
+        public PredictionViewHolder(View itemView) {
+            super(itemView);
+            countDown = (TextView) itemView.findViewById(R.id.prediction_item_countdown);
+            time = (TextView) itemView.findViewById(R.id.prediction_item_time);
+        }
+
+        public void setData(Prediction data){
+            countDown.setText(data.getMinutes()+"");
+            time.setText(DateUtils.formatElapsedTime(data.getEpochTime()));
         }
     }
 }
