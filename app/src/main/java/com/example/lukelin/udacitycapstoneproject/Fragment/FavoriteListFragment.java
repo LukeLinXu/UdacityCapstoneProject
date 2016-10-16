@@ -15,13 +15,18 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 
 import com.example.lukelin.udacitycapstoneproject.FavoriteIntentService;
 import com.example.lukelin.udacitycapstoneproject.MyResultReceiver;
 import com.example.lukelin.udacitycapstoneproject.R;
+import com.example.lukelin.udacitycapstoneproject.RecyclerViewComponent.PredictionsAdapter;
 import com.example.lukelin.udacitycapstoneproject.data.FavoriteColumns;
 import com.example.lukelin.udacitycapstoneproject.data.FavoriteProvider;
+import com.example.lukelin.udacitycapstoneproject.pojos.Predictions;
+import com.google.gson.Gson;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import static android.content.ContentValues.TAG;
 
@@ -80,33 +85,14 @@ public class FavoriteListFragment extends Fragment implements LoaderManager.Load
     public void onLoadFinished(Loader<Cursor> loader, final Cursor data) {
         Log.d("Luke", "LukeonLoadFinished: "+data.getCount());
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-        recyclerView.setAdapter(new RecyclerView.Adapter<RouteListViewHolder>() {
-            @Override
-            public RouteListViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-                View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.route_list_item, parent, false);
-                return new RouteListViewHolder(v);
-            }
-
-            @Override
-            public void onBindViewHolder(RouteListViewHolder holder, int position) {
-                if(data.moveToPosition(position)){
-                    final String tag = data.getString(data.getColumnIndex(FavoriteColumns.TAG));
-                    holder.mTag.setText(tag);
-                    holder.mTitle.setText(data.getString(data.getColumnIndex(FavoriteColumns.CONTENT)));
-                    holder.itemView.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-//                            startActivity(new Intent(getActivity(), RouteDetailActvity.class).putExtra(Extras.DATA, tag));
-                        }
-                    });
-                }
-            }
-
-            @Override
-            public int getItemCount() {
-                return data.getCount();
-            }
-        });
+        List<Predictions> object = new ArrayList<>();
+        while (data.moveToNext()){
+            Gson gson = new Gson();
+            Predictions predictions = gson.fromJson(data.getString(data.getColumnIndex(FavoriteColumns.CONTENT)), Predictions.class);
+            object.add(predictions);
+        }
+        PredictionsAdapter predictionsAdapter = new PredictionsAdapter(object);
+        recyclerView.setAdapter(predictionsAdapter);
     }
 
     @Override
@@ -117,16 +103,6 @@ public class FavoriteListFragment extends Fragment implements LoaderManager.Load
     @Override
     public void onReceiveResult(int resultCode, Bundle resultData) {
         Log.d(TAG, "onReceiveResult: "+resultCode);
-    }
-
-    private class RouteListViewHolder extends RecyclerView.ViewHolder{
-        public TextView mTag, mTitle;
-
-        public RouteListViewHolder(View itemView) {
-            super(itemView);
-            mTag = (TextView) itemView.findViewById(R.id.route_list_item_tag);
-            mTitle = (TextView) itemView.findViewById(R.id.route_list_item_title);
-        }
     }
 
 }

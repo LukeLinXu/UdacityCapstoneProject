@@ -2,23 +2,14 @@ package com.example.lukelin.udacitycapstoneproject.Fragment;
 
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.text.format.DateUtils;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.CheckBox;
-import android.widget.CompoundButton;
 import android.widget.RelativeLayout;
-import android.widget.TextView;
 
 import com.example.lukelin.udacitycapstoneproject.R;
-import com.example.lukelin.udacitycapstoneproject.pojos.Direction;
-import com.example.lukelin.udacitycapstoneproject.pojos.Prediction;
+import com.example.lukelin.udacitycapstoneproject.RecyclerViewComponent.PredictionsAdapter;
 import com.example.lukelin.udacitycapstoneproject.pojos.Predictions;
 import com.example.lukelin.udacitycapstoneproject.pojos.PredictionsResult;
 import com.example.lukelin.udacitycapstoneproject.util.Extras;
 import com.example.lukelin.udacitycapstoneproject.util.RestClient;
-import com.example.lukelin.udacitycapstoneproject.util.Utils;
 
 import java.util.List;
 
@@ -68,146 +59,4 @@ public class StopDetailFragment extends ClickToRefreshFragmentBase<List<Predicti
         return R.layout.route_detail_fragment;
     }
 
-    public class PredictionsAdapter extends RecyclerView.Adapter<PredictionsHolder>{
-
-        private List<Predictions> predictionsList;
-        public PredictionsAdapter(List<Predictions> predictionsList) {
-
-            this.predictionsList = predictionsList;
-        }
-
-        @Override
-        public PredictionsHolder onCreateViewHolder(ViewGroup viewGroup, int i) {
-            final View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.predictions_item, viewGroup, false);
-            return new PredictionsHolder(view);
-        }
-
-        @Override
-        public void onBindViewHolder(PredictionsHolder viewHolder, int i) {
-            viewHolder.setData(predictionsList.get(i));
-        }
-
-        @Override
-        public int getItemCount() {
-            return predictionsList.size();
-        }
-
-    }
-
-    class PredictionsHolder extends RecyclerView.ViewHolder {
-        private TextView tag;
-        private TextView header;
-        private CheckBox favoriteCheckbox;
-        private RecyclerView recyclerView;
-
-        public PredictionsHolder(View itemView) {
-            super(itemView);
-            tag = (TextView) itemView.findViewById(R.id.predictions_item_tag);
-            header = (TextView) itemView.findViewById(R.id.predictions_item_route_title);
-            favoriteCheckbox = (CheckBox) itemView.findViewById(R.id.predictions_item_favorite_checkbox);
-            recyclerView = (RecyclerView) itemView.findViewById(R.id.predictions_item_recyclerview);
-        }
-
-        public void setData(final Predictions data) {
-            tag.setText(data.getRouteTag());
-            header.setText(data.getRouteTitle());
-            favoriteCheckbox.setChecked(Utils.hasFavorite(data.getFavoriteTag(), getActivity().getContentResolver()));
-            favoriteCheckbox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-                @Override
-                public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                    if(isChecked){
-                        Utils.buildBatchOperation(data.getFavoriteTag(), getActivity().getContentResolver());
-                    }else {
-                        Utils.buildBatchOperationDelete(data.getFavoriteTag(), getActivity().getContentResolver());
-                    }
-                }
-            });
-            recyclerView.setLayoutManager(new LinearLayoutManager(recyclerView.getContext()));
-            recyclerView.setAdapter(new DirectionAdapter(data.getDirectionList()));
-        }
-    }
-
-    public class DirectionAdapter extends RecyclerView.Adapter<DirectionsHolder>{
-        private List<Direction> directionList;
-
-        public DirectionAdapter(List<Direction> directionList) {
-            this.directionList = directionList;
-        }
-
-        @Override
-        public DirectionsHolder onCreateViewHolder(ViewGroup viewGroup, int i) {
-            final View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.direction_item, viewGroup, false);
-            return new DirectionsHolder(view);
-        }
-
-        @Override
-        public void onBindViewHolder(DirectionsHolder viewHolder, int i) {
-            viewHolder.setData(directionList.get(i));
-        }
-
-        @Override
-        public int getItemCount() {
-            return directionList.size();
-        }
-
-    }
-
-    class DirectionsHolder extends RecyclerView.ViewHolder {
-        private TextView header;
-        private RecyclerView recyclerView;
-
-        public DirectionsHolder(View itemView) {
-            super(itemView);
-            header = (TextView) itemView.findViewById(R.id.direction_item_route_title);
-            recyclerView = (RecyclerView) itemView.findViewById(R.id.direction_item_recyclerview);
-        }
-
-        public void setData(Direction data) {
-            header.setText(data.getTitle());
-            recyclerView.setLayoutManager(new LinearLayoutManager(recyclerView.getContext()));
-            recyclerView.setAdapter(new PredictionAdapter(data.getPredictionList()));
-        }
-    }
-
-    public class PredictionAdapter extends RecyclerView.Adapter<PredictionViewHolder>{
-
-        private List<Prediction> predictionList;
-        public PredictionAdapter(List<Prediction> predictionList) {
-
-            this.predictionList = predictionList;
-        }
-
-        @Override
-        public PredictionViewHolder onCreateViewHolder(ViewGroup viewGroup, int i) {
-            final View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.prediction_item, viewGroup, false);
-            return new PredictionViewHolder(view);
-        }
-
-        @Override
-        public void onBindViewHolder(PredictionViewHolder viewHolder, int i) {
-            viewHolder.setData(predictionList.get(i));
-        }
-
-        @Override
-        public int getItemCount() {
-            return predictionList.size();
-        }
-
-    }
-
-    class PredictionViewHolder extends RecyclerView.ViewHolder {
-        private TextView time;
-        private TextView countDown;
-
-        public PredictionViewHolder(View itemView) {
-            super(itemView);
-            countDown = (TextView) itemView.findViewById(R.id.prediction_item_countdown);
-            time = (TextView) itemView.findViewById(R.id.prediction_item_time);
-        }
-
-        public void setData(Prediction data){
-            countDown.setText(data.getMinutes()+"");
-            time.setText(DateUtils.formatElapsedTime(data.getEpochTime()));
-        }
-    }
 }
