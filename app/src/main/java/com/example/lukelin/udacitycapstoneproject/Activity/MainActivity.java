@@ -1,5 +1,8 @@
 package com.example.lukelin.udacitycapstoneproject.Activity;
 
+import android.location.Location;
+import android.location.LocationListener;
+import android.location.LocationManager;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
@@ -13,22 +16,47 @@ import com.example.lukelin.udacitycapstoneproject.Fragment.FavoriteListFragment;
 import com.example.lukelin.udacitycapstoneproject.Fragment.RouteListFragment;
 import com.example.lukelin.udacitycapstoneproject.Fragment.SurroundingStopFragment;
 import com.example.lukelin.udacitycapstoneproject.R;
+import com.example.lukelin.udacitycapstoneproject.util.Extras;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
-    public static final int SORT_OPTIONS_BEST = 0;
-    public static final int SORT_ALPHA = 1;
-    private int currentSortOption = SORT_OPTIONS_BEST;
     private ViewPager viewPager;
     private SimpleAdapter adapter;
+    private LocationManager mLocationManager;
+    private LocationListener mLocationListener = new LocationListener() {
+        @Override
+        public void onLocationChanged(Location location) {
+            Extras.location = location;
+        }
+
+        @Override
+        public void onStatusChanged(String provider, int status, Bundle extras) {
+        }
+
+        @Override
+        public void onProviderEnabled(String provider) {
+        }
+
+        @Override
+        public void onProviderDisabled(String provider) {
+        }
+    };
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        mLocationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
+        mLocationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 5000,
+                500, mLocationListener);
+        mLocationManager.requestLocationUpdates(LocationManager.PASSIVE_PROVIDER, 5000,
+                500, mLocationListener);
+        mLocationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 5000,
+                500, mLocationListener);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         viewPager = (ViewPager) findViewById(R.id.viewpager);

@@ -7,7 +7,7 @@ android {
     defaultConfig {
         applicationId "com.example.lukelin.udacitycapstoneproject"
         minSdkVersion 15
-        targetSdkVersion 24
+        targetSdkVersion 22
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
@@ -40,4 +40,5 @@ dependencies {
     compile 'io.reactivex:rxjava:1.1.0'
     compile 'ca.barrenechea.header-decor:header-decor:0.2.7'
     compile 'com.google.code.gson:gson:2.7'
+    compile 'com.google.android.gms:play-services:9.6.1'
 }
