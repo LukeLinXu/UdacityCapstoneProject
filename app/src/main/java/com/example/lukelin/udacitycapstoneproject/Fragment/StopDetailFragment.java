@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -17,6 +18,7 @@ import com.example.lukelin.udacitycapstoneproject.pojos.Predictions;
 import com.example.lukelin.udacitycapstoneproject.pojos.PredictionsResult;
 import com.example.lukelin.udacitycapstoneproject.util.Extras;
 import com.example.lukelin.udacitycapstoneproject.util.RestClient;
+import com.example.lukelin.udacitycapstoneproject.util.Utils;
 
 import java.util.List;
 
@@ -106,10 +108,20 @@ public class StopDetailFragment extends ClickToRefreshFragmentBase<List<Predicti
             recyclerView = (RecyclerView) itemView.findViewById(R.id.predictions_item_recyclerview);
         }
 
-        public void setData(Predictions data) {
+        public void setData(final Predictions data) {
             tag.setText(data.getRouteTag());
             header.setText(data.getRouteTitle());
-            favoriteCheckbox.setChecked(true);
+            favoriteCheckbox.setChecked(Utils.hasFavorite(data.getFavoriteTag(), getActivity().getContentResolver()));
+            favoriteCheckbox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                @Override
+                public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                    if(isChecked){
+                        Utils.buildBatchOperation(data.getFavoriteTag(), getActivity().getContentResolver());
+                    }else {
+                        Utils.buildBatchOperationDelete(data.getFavoriteTag(), getActivity().getContentResolver());
+                    }
+                }
+            });
             recyclerView.setLayoutManager(new LinearLayoutManager(recyclerView.getContext()));
             recyclerView.setAdapter(new DirectionAdapter(data.getDirectionList()));
         }

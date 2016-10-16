@@ -2,9 +2,11 @@ package com.example.lukelin.udacitycapstoneproject.util;
 
 import android.app.Activity;
 import android.content.ContentProviderOperation;
+import android.content.ContentResolver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.OperationApplicationException;
+import android.database.Cursor;
 import android.os.RemoteException;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -24,6 +26,7 @@ import com.example.lukelin.udacitycapstoneproject.pojos.RouteListResult;
 import com.example.lukelin.udacitycapstoneproject.pojos.Stop;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.concurrent.ConcurrentHashMap;
@@ -55,14 +58,20 @@ public class Utils {
         return builder.build();
     }
 
-    public static ContentProviderOperation buildBatchOperationDelete(String tag){
-        ContentProviderOperation.Builder builder = ContentProviderOperation.newUpdate(
+    public static void buildBatchOperationDelete(String tag, ContentResolver contentResolver){
+        ContentProviderOperation.Builder builder = ContentProviderOperation.newDelete(
                 FavoriteProvider.Favorites.CONTENT_URI);
         builder.withSelection(FavoriteColumns.TAG+"=?", new String[]{tag});
-        return builder.build();
+        try {
+            contentResolver.applyBatch(FavoriteProvider.AUTHORITY, new ArrayList<>(Arrays.asList(builder.build())));
+        } catch (RemoteException e) {
+            e.printStackTrace();
+        } catch (OperationApplicationException e) {
+            e.printStackTrace();
+        }
     }
 
-    public static ContentProviderOperation buildBatchOperation(String tag) {
+    public static void buildBatchOperation(String tag, ContentResolver contentResolver) {
         ContentProviderOperation.Builder builder = ContentProviderOperation.newInsert(
                 FavoriteProvider.Favorites.CONTENT_URI);
         builder.withValue(FavoriteColumns.TAG, tag);
@@ -70,7 +79,21 @@ public class Utils {
         builder.withValue(FavoriteColumns.ROUTE_TITLE, "N/A");
         builder.withValue(FavoriteColumns.TIMESTAMP, "N/A");
         builder.withValue(FavoriteColumns.CONTENT, "N/A");
-        return builder.build();
+        try {
+            contentResolver.applyBatch(FavoriteProvider.AUTHORITY, new ArrayList<>(Arrays.asList(builder.build())));
+        } catch (RemoteException e) {
+            e.printStackTrace();
+        } catch (OperationApplicationException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static boolean hasFavorite(String tag, ContentResolver contentResolver){
+        Cursor initQueryCursor = contentResolver.query(FavoriteProvider.Favorites.CONTENT_URI,
+                new String[] {FavoriteColumns.TAG}, FavoriteColumns.TAG+"=?",
+                new String[]{tag}, null);
+        if(initQueryCursor == null || initQueryCursor.getCount() == 0) return false;
+        return true;
     }
 
     public static ContentProviderOperation buildBatchOperation(Favorite favorite){

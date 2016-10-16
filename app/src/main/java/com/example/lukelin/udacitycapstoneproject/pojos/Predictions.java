@@ -47,7 +47,11 @@ public class Predictions {
     public Favorite getFavorite(long timestamp){
         Gson gson = new Gson();
         String content = gson.toJson(getDirectionList());
-        return new Favorite(routeTag+"|"+stopTag, routeTitle, stopTitle, String.valueOf(timestamp), content);
+        return new Favorite(getFavoriteTag(), routeTitle, stopTitle, String.valueOf(timestamp), content);
+    }
+
+    public String getFavoriteTag(){
+        return routeTag+"|"+stopTag;
     }
 
     public String getRouteTag() {
