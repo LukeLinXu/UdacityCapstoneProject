@@ -6,6 +6,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CheckBox;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -18,6 +19,7 @@ import com.example.lukelin.udacitycapstoneproject.util.Extras;
 import com.example.lukelin.udacitycapstoneproject.util.RestClient;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import ca.barrenechea.widget.recyclerview.decoration.StickyHeaderAdapter;
@@ -96,7 +98,8 @@ public class StopDetailFragment extends ClickToRefreshFragmentBase<List<Predicti
 
         @Override
         public void onBindViewHolder(ViewHolder viewHolder, int i) {
-            viewHolder.item.setText("Item " + predictions.get(i).getMinutes());
+            viewHolder.time.setText(new Date(predictions.get(i).getEpochTime()).toString());
+            viewHolder.countDown.setText(predictions.get(i).getMinutes()+"");
         }
 
         @Override
@@ -106,11 +109,7 @@ public class StopDetailFragment extends ClickToRefreshFragmentBase<List<Predicti
 
         @Override
         public long getHeaderId(int position) {
-//            if (position == 0) { // don't show header for first item
-//                return StickyHeaderDecoration.NO_HEADER_ID;
-//            }
-//            return (long) position / 7;
-            return predictions.get(position).getDirTag().hashCode();
+            return predictions.get(position).getTitle().hashCode();
         }
 
         @Override
@@ -121,27 +120,34 @@ public class StopDetailFragment extends ClickToRefreshFragmentBase<List<Predicti
 
         @Override
         public void onBindHeaderViewHolder(HeaderHolder viewholder, int position) {
-            viewholder.header.setText("Header " + predictions.get(position).getDirTag());
+            viewholder.tag.setText(predictions.get(position).getRouteTag());
+            viewholder.header.setText(predictions.get(position).getTitle());
         }
 
 
         class ViewHolder extends RecyclerView.ViewHolder {
-            public TextView item;
+            public TextView time;
+            public TextView countDown;
 
             public ViewHolder(View itemView) {
                 super(itemView);
-
-                item = (TextView) itemView.findViewById(R.id.prediction_item_title);
+                countDown = (TextView) itemView.findViewById(R.id.prediction_item_countdown);
+                time = (TextView) itemView.findViewById(R.id.prediction_item_time);
             }
         }
 
         class HeaderHolder extends RecyclerView.ViewHolder {
+            public TextView tag;
             public TextView header;
+            public CheckBox favoriteCheckbox;
 
             public HeaderHolder(View itemView) {
                 super(itemView);
 
+                tag = (TextView) itemView.findViewById(R.id.prediction_header_tag);
                 header = (TextView) itemView.findViewById(R.id.prediction_header_title);
+                favoriteCheckbox = (CheckBox) itemView.findViewById(R.id.prediction_header_favorite_checkbox);
+                favoriteCheckbox.setChecked(true);
             }
         }
     }

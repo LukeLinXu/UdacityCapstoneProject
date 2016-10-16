@@ -16,10 +16,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.example.lukelin.udacitycapstoneproject.Activity.MapActivity;
+import com.example.lukelin.udacitycapstoneproject.Activity.StopDetailActvity;
 import com.example.lukelin.udacitycapstoneproject.R;
 import com.example.lukelin.udacitycapstoneproject.data.StopColumns;
 import com.example.lukelin.udacitycapstoneproject.data.StopProvider;
+import com.example.lukelin.udacitycapstoneproject.util.Extras;
 
 /**
  * Created by lukelin on 2016-10-14.
@@ -85,8 +86,8 @@ public class SurroundingStopFragment extends Fragment implements LoaderManager.L
                     holder.itemView.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
-                            startActivity(new Intent(getActivity(), MapActivity.class));
-//                            startActivity(new Intent(getActivity(), StopDetailActvity.class).putExtra(Extras.DATA, stopId));
+//                            startActivity(new Intent(getActivity(), MapActivity.class));
+                            startActivity(new Intent(getActivity(), StopDetailActvity.class).putExtra(Extras.DATA, stopId));
                         }
                     });
                 }

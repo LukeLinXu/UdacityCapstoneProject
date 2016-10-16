@@ -31,6 +31,18 @@ public class Prediction {
     @Attribute(name = "tripTag", required = false)
     private String tripTag;
 
+    private String routeTag;
+
+    private String title;
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
     public long getEpochTime() {
         return epochTime;
     }
@@ -49,5 +61,13 @@ public class Prediction {
 
     public String getDirTag() {
         return dirTag;
+    }
+
+    public String getRouteTag() {
+        return routeTag;
+    }
+
+    public void setRouteTag(String routeTag) {
+        this.routeTag = routeTag;
     }
 }

@@ -41,6 +41,9 @@ public class Predictions {
 
     public List<Direction> getDirectionList() {
         if (directionList == null) return new ArrayList<>();
+        for(Direction direction : directionList){
+            direction.setRouteTag(routeTag);
+        }
         return directionList;
     }
 

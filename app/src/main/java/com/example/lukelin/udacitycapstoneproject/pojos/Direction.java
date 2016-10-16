@@ -4,6 +4,7 @@ import org.simpleframework.xml.Attribute;
 import org.simpleframework.xml.ElementList;
 import org.simpleframework.xml.Root;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -33,6 +34,8 @@ public class Direction {
     @ElementList(inline = true, required = false)
     private List<Prediction> predictionList;
 
+    private String routeTag;
+
     public String getTitle() {
         return title;
     }
@@ -46,6 +49,19 @@ public class Direction {
     }
 
     public List<Prediction> getPredictionList() {
+        if(predictionList == null) return new ArrayList<>();
+        for(Prediction prediction : predictionList){
+            prediction.setTitle(title);
+            prediction.setRouteTag(routeTag);
+        }
         return predictionList;
+    }
+
+    public String getRouteTag() {
+        return routeTag;
+    }
+
+    public void setRouteTag(String routeTag) {
+        this.routeTag = routeTag;
     }
 }

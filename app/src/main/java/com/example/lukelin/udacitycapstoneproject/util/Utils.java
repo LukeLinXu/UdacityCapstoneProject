@@ -55,6 +55,24 @@ public class Utils {
         return builder.build();
     }
 
+    public static ContentProviderOperation buildBatchOperationDelete(String tag){
+        ContentProviderOperation.Builder builder = ContentProviderOperation.newUpdate(
+                FavoriteProvider.Favorites.CONTENT_URI);
+        builder.withSelection(FavoriteColumns.TAG+"=?", new String[]{tag});
+        return builder.build();
+    }
+
+    public static ContentProviderOperation buildBatchOperation(String tag) {
+        ContentProviderOperation.Builder builder = ContentProviderOperation.newInsert(
+                FavoriteProvider.Favorites.CONTENT_URI);
+        builder.withValue(FavoriteColumns.TAG, tag);
+        builder.withValue(FavoriteColumns.STOP_TITLE, "N/A");
+        builder.withValue(FavoriteColumns.ROUTE_TITLE, "N/A");
+        builder.withValue(FavoriteColumns.TIMESTAMP, "N/A");
+        builder.withValue(FavoriteColumns.CONTENT, "N/A");
+        return builder.build();
+    }
+
     public static ContentProviderOperation buildBatchOperation(Favorite favorite){
         ContentProviderOperation.Builder builder = ContentProviderOperation.newInsert(
                 FavoriteProvider.Favorites.CONTENT_URI);
