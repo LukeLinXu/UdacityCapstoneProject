@@ -1,5 +1,7 @@
 package com.example.lukelin.udacitycapstoneproject.pojos;
 
+import com.google.gson.Gson;
+
 import org.simpleframework.xml.Attribute;
 import org.simpleframework.xml.ElementList;
 import org.simpleframework.xml.Root;
@@ -23,7 +25,7 @@ public class Predictions {
     private String routeTag;
 
     @Attribute(name = "stopTitle", required = false)
-    private boolean stopTitle;
+    private String stopTitle;
 
     @Attribute(name = "stopTag", required = false)
     private String stopTag;
@@ -40,5 +42,11 @@ public class Predictions {
     public List<Direction> getDirectionList() {
         if (directionList == null) return new ArrayList<>();
         return directionList;
+    }
+
+    public Favorite getFavorite(long timestamp){
+        Gson gson = new Gson();
+        String content = gson.toJson(getDirectionList());
+        return new Favorite(routeTag+"|"+stopTag, routeTitle, stopTitle, String.valueOf(timestamp), content);
     }
 }

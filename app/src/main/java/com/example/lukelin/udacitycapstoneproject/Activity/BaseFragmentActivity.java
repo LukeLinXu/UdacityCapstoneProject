@@ -1,7 +1,7 @@
 package com.example.lukelin.udacitycapstoneproject.Activity;
 
-import android.app.Fragment;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 
 import com.example.lukelin.udacitycapstoneproject.R;
@@ -17,7 +17,7 @@ public abstract class BaseFragmentActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_regular);
-        Utils.switchFragment(getFragmentManager(), getFragment(), R.id.fragment_container);
+        Utils.switchFragment(getSupportFragmentManager(), getFragment(), R.id.fragment_container);
     }
 
     abstract Fragment getFragment();

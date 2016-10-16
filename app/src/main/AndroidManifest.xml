@@ -30,6 +30,8 @@
 
         <activity android:name=".Activity.StopDetailActvity"/>
 
+        <service android:name=".FavoriteIntentService"/>
+
         <provider
             android:authorities="com.example.lukelin.udacitycapstoneproject.data.RouteProvider"
             android:name="com.example.lukelin.udacitycapstoneproject.data.generated.RouteProvider"
@@ -38,6 +40,10 @@
         <provider
             android:authorities="com.example.lukelin.udacitycapstoneproject.data.StopProvider"
             android:name="com.example.lukelin.udacitycapstoneproject.data.generated.StopProvider"
+            android:exported="true"/>
+        <provider
+            android:authorities="com.example.lukelin.udacitycapstoneproject.data.FavoriteProvider"
+            android:name="com.example.lukelin.udacitycapstoneproject.data.generated.FavoriteProvider"
             android:exported="true"/>
     </application>
 

@@ -1,20 +1,23 @@
 package com.example.lukelin.udacitycapstoneproject.util;
 
 import android.app.Activity;
-import android.app.Fragment;
-import android.app.FragmentManager;
-import android.app.FragmentTransaction;
 import android.content.ContentProviderOperation;
 import android.content.Context;
 import android.content.Intent;
 import android.content.OperationApplicationException;
 import android.os.RemoteException;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 
 import com.example.lukelin.udacitycapstoneproject.Activity.MainActivity;
+import com.example.lukelin.udacitycapstoneproject.data.FavoriteColumns;
+import com.example.lukelin.udacitycapstoneproject.data.FavoriteProvider;
 import com.example.lukelin.udacitycapstoneproject.data.RouteColumns;
 import com.example.lukelin.udacitycapstoneproject.data.RouteProvider;
 import com.example.lukelin.udacitycapstoneproject.data.StopColumns;
 import com.example.lukelin.udacitycapstoneproject.data.StopProvider;
+import com.example.lukelin.udacitycapstoneproject.pojos.Favorite;
 import com.example.lukelin.udacitycapstoneproject.pojos.GetRouteResult;
 import com.example.lukelin.udacitycapstoneproject.pojos.Route;
 import com.example.lukelin.udacitycapstoneproject.pojos.RouteListResult;
@@ -40,6 +43,26 @@ public class Utils {
                 RouteProvider.Routes.CONTENT_URI);
         builder.withValue(RouteColumns.TAG, route.getTag());
         builder.withValue(RouteColumns.TITLE, route.getTitle());
+        return builder.build();
+    }
+
+    public static ContentProviderOperation buildBatchOperationUpdate(Favorite favorite){
+        ContentProviderOperation.Builder builder = ContentProviderOperation.newUpdate(
+                FavoriteProvider.Favorites.CONTENT_URI);
+        builder.withSelection(FavoriteColumns.TAG+"=?", new String[]{favorite.getTag()});
+        builder.withValue(FavoriteColumns.TIMESTAMP, favorite.getTimestamp());
+        builder.withValue(FavoriteColumns.CONTENT, favorite.getContent());
+        return builder.build();
+    }
+
+    public static ContentProviderOperation buildBatchOperation(Favorite favorite){
+        ContentProviderOperation.Builder builder = ContentProviderOperation.newInsert(
+                FavoriteProvider.Favorites.CONTENT_URI);
+        builder.withValue(FavoriteColumns.TAG, favorite.getTag());
+        builder.withValue(FavoriteColumns.STOP_TITLE, favorite.getStopTitle());
+        builder.withValue(FavoriteColumns.ROUTE_TITLE, favorite.getRouteTitle());
+        builder.withValue(FavoriteColumns.TIMESTAMP, favorite.getTimestamp());
+        builder.withValue(FavoriteColumns.CONTENT, favorite.getContent());
         return builder.build();
     }
 
