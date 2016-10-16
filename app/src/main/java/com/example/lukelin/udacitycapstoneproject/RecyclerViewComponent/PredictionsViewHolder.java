@@ -37,7 +37,7 @@ public class PredictionsViewHolder extends RecyclerView.ViewHolder {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if(isChecked){
-                    Utils.buildBatchOperation(data.getFavoriteTag(), itemView.getContext().getContentResolver());
+                    Utils.buildBatchOperation(data.getFavorite(System.currentTimeMillis()), itemView.getContext().getContentResolver());
                 }else {
                     Utils.buildBatchOperationDelete(data.getFavoriteTag(), itemView.getContext().getContentResolver());
                 }

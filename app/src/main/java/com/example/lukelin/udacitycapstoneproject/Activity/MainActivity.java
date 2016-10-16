@@ -1,5 +1,6 @@
 package com.example.lukelin.udacitycapstoneproject.Activity;
 
+import android.content.Intent;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
@@ -11,6 +12,8 @@ import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.Menu;
+import android.view.MenuItem;
 
 import com.example.lukelin.udacitycapstoneproject.Fragment.FavoriteListFragment;
 import com.example.lukelin.udacitycapstoneproject.Fragment.RouteListFragment;
@@ -67,25 +70,25 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-//    @Override
-//    public boolean onCreateOptionsMenu(Menu menu) {
-//        getMenuInflater().inflate(R.menu.menu, menu);
-//        return true;
-//    }
-//
-//    @Override
-//    public boolean onOptionsItemSelected(MenuItem item) {
-//        switch (item.getItemId()){
-//            case R.id.search:
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_main, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()){
+            case R.id.search:
 //                startActivity(new Intent(MainActivity.this, SearchActivity.class).putExtra(Extras.SORT_OPTIONS,
 //                        currentSortOption));
-//                break;
-//            case R.id.sort:
-//                showSortingOptions(MainActivity.this, currentSortOption);
-//                break;
-//        }
-//        return super.onOptionsItemSelected(item);
-//    }
+                break;
+            case R.id.sort:
+                startActivity(new Intent(this, MapActivity.class));
+                break;
+        }
+        return super.onOptionsItemSelected(item);
+    }
 
     private void setupViewPager() {
         adapter = new SimpleAdapter(getSupportFragmentManager());

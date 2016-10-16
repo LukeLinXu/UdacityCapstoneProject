@@ -71,16 +71,9 @@ public class Utils {
         }
     }
 
-    public static void buildBatchOperation(String tag, ContentResolver contentResolver) {
-        ContentProviderOperation.Builder builder = ContentProviderOperation.newInsert(
-                FavoriteProvider.Favorites.CONTENT_URI);
-        builder.withValue(FavoriteColumns.TAG, tag);
-        builder.withValue(FavoriteColumns.STOP_TITLE, "N/A");
-        builder.withValue(FavoriteColumns.ROUTE_TITLE, "N/A");
-        builder.withValue(FavoriteColumns.TIMESTAMP, "N/A");
-        builder.withValue(FavoriteColumns.CONTENT, "N/A");
+    public static void buildBatchOperation(Favorite favorite, ContentResolver contentResolver) {
         try {
-            contentResolver.applyBatch(FavoriteProvider.AUTHORITY, new ArrayList<>(Arrays.asList(builder.build())));
+            contentResolver.applyBatch(FavoriteProvider.AUTHORITY, new ArrayList<>(Arrays.asList(buildBatchOperation(favorite))));
         } catch (RemoteException e) {
             e.printStackTrace();
         } catch (OperationApplicationException e) {
