@@ -11,4 +11,10 @@
     <string name="loading">Update Database...\n Please wait a second</string>
     <string name="no_valid_location">Your device is trying to get valid location, please wait a second</string>
     <string name="stops_map">Stops Map</string>
+    <string name="will_arrive_at">This vehicle will arrive at</string>
+    <string name="time_left">Left</string>
+    <string name="this_vehicle_is">This vehicle is</string>
+    <string name="add_favorite">You can double click this and add to your favorites</string>
+    <string name="remove_favorite">You got this in your favorites, you can double click to remove it.</string>
+    <string name="this_stop_is">This stop is</string>
 </resources>

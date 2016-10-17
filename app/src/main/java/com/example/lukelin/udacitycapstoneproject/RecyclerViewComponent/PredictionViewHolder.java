@@ -32,6 +32,7 @@ public class PredictionViewHolder extends RecyclerView.ViewHolder {
         SimpleDateFormat sdf = new SimpleDateFormat("HH:mm:ss");
         Date date = new Date(epochTime);
         time.setText(sdf.format(date));
+        time.setContentDescription(itemView.getContext().getString(R.string.will_arrive_at)+sdf.format(date));
         new CountDownTimer(DateUtils.HOUR_IN_MILLIS, 1000) {
             @Override
             public void onTick(long millisUntilFinished) {
@@ -45,6 +46,8 @@ public class PredictionViewHolder extends RecyclerView.ViewHolder {
     }
 
     private void updateCountDown(long epochTime){
-        countDown.setText(DateUtils.formatElapsedTime((epochTime - System.currentTimeMillis())/1000));
+        String s = DateUtils.formatElapsedTime((epochTime - System.currentTimeMillis()) / 1000);
+        countDown.setText(s);
+        countDown.setContentDescription(s + itemView.getContext().getString(R.string.time_left));
     }
 }

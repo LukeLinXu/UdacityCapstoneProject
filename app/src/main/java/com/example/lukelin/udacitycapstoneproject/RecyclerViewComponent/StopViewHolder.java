@@ -27,6 +27,7 @@ public class StopViewHolder extends RecyclerView.ViewHolder {
 
     public void setData(final Stop data){
         title.setText(data.getTitle());
+        title.setContentDescription(itemView.getContext().getString(R.string.this_stop_is)+data.getTitle());
         itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

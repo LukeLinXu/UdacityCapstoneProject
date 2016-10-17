@@ -34,7 +34,9 @@ public class PredictionsViewHolder extends RecyclerView.ViewHolder {
         final Context context = itemView.getContext();
         tag.setText(data.getRouteTag());
         header.setText(data.getRouteTitle());
+        header.setContentDescription(itemView.getContext().getString(R.string.this_vehicle_is)+data.getRouteTitle());
         favoriteCheckbox.setChecked(Utils.hasFavorite(data.getFavoriteTag(), context.getContentResolver()));
+        favoriteContent();
         favoriteCheckbox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
@@ -43,9 +45,14 @@ public class PredictionsViewHolder extends RecyclerView.ViewHolder {
                 }else {
                     Utils.buildBatchOperationDelete(data.getFavoriteTag(), context.getContentResolver(), context);
                 }
+                favoriteContent();
             }
         });
         recyclerView.setLayoutManager(new LinearLayoutManager(context));
         recyclerView.setAdapter(new DirectionAdapter(data.getDirectionList()));
+    }
+
+    private void favoriteContent(){
+        favoriteCheckbox.setContentDescription(itemView.getContext().getString(favoriteCheckbox.isChecked() ? R.string.remove_favorite : R.string.add_favorite));
     }
 }

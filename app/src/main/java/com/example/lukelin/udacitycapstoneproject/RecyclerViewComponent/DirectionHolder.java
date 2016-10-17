@@ -24,6 +24,7 @@ public class DirectionHolder extends RecyclerView.ViewHolder {
 
     public void setData(Direction data) {
         header.setText(data.getTitle());
+        header.setContentDescription(itemView.getContext().getString(R.string.this_vehicle_is)+data.getTitle());
         recyclerView.setLayoutManager(new LinearLayoutManager(recyclerView.getContext()));
         recyclerView.setAdapter(new PredictionAdapter(data.getPredictionList()));
     }
