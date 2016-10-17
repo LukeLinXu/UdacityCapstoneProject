@@ -9,4 +9,6 @@
     <string name="route_list">RouteList</string>
     <string name="map_title">Map</string>
     <string name="loading">Update Database...\n Please wait a second</string>
+    <string name="no_valid_location">Your device is trying to get valid location, please wait a second</string>
+    <string name="stops_map">Stops Map</string>
 </resources>

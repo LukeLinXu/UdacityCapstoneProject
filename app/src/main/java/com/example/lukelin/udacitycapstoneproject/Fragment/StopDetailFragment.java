@@ -4,6 +4,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.widget.RelativeLayout;
 
+import com.example.lukelin.udacitycapstoneproject.Activity.StopDetailActvity;
 import com.example.lukelin.udacitycapstoneproject.R;
 import com.example.lukelin.udacitycapstoneproject.RecyclerViewComponent.PredictionsAdapter;
 import com.example.lukelin.udacitycapstoneproject.pojos.Predictions;
@@ -48,6 +49,11 @@ public class StopDetailFragment extends ClickToRefreshFragmentBase<List<Predicti
 
     @Override
     protected void refreshUI(RelativeLayout mainContent, final List<Predictions> object) {
+        StopDetailActvity activity = (StopDetailActvity) getActivity();
+        activity.getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        if(object != null && object.size() != 0){
+            activity.getSupportActionBar().setTitle(object.get(0).getStopTitle());
+        }
         RecyclerView recyclerView = (RecyclerView) mainContent.findViewById(R.id.stop_detail_fragment_directions);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         PredictionsAdapter predictionsAdapter = new PredictionsAdapter(object);

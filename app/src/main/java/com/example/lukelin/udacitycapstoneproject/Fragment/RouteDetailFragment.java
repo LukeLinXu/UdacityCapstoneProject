@@ -4,6 +4,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.widget.RelativeLayout;
 
+import com.example.lukelin.udacitycapstoneproject.Activity.RouteDetailActvity;
 import com.example.lukelin.udacitycapstoneproject.R;
 import com.example.lukelin.udacitycapstoneproject.RecyclerViewComponent.RouteDetailDirectionAdapter;
 import com.example.lukelin.udacitycapstoneproject.pojos.Direction;
@@ -51,9 +52,12 @@ public class RouteDetailFragment extends ClickToRefreshFragmentBase<Route> {
 
     @Override
     protected void refreshUI(RelativeLayout mainContent, final Route object) {
+        RouteDetailActvity activity = (RouteDetailActvity) getActivity();
+        activity.getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        activity.getSupportActionBar().setTitle(object.getTitle());
         RecyclerView recyclerView = (RecyclerView) mainContent.findViewById(R.id.route_detail_fragment_directions);
 
-        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+        recyclerView.setLayoutManager(new LinearLayoutManager(activity));
         HashMap<String, Stop> hashMap = new HashMap<>();
         for(Stop stop : object.getStopList()){
             hashMap.put(stop.getTag(), stop);

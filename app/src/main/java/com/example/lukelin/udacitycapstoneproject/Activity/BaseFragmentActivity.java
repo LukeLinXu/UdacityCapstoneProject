@@ -3,6 +3,7 @@ package com.example.lukelin.udacitycapstoneproject.Activity;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
+import android.view.MenuItem;
 
 import com.example.lukelin.udacitycapstoneproject.R;
 import com.example.lukelin.udacitycapstoneproject.util.Utils;
@@ -21,4 +22,13 @@ public abstract class BaseFragmentActivity extends AppCompatActivity {
     }
 
     abstract Fragment getFragment();
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                onBackPressed();
+        }
+        return super.onOptionsItemSelected(item);
+    }
 }

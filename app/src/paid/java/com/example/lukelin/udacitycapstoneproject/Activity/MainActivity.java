@@ -14,6 +14,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 import com.example.lukelin.udacitycapstoneproject.Fragment.FavoriteListFragment;
 import com.example.lukelin.udacitycapstoneproject.Fragment.RouteListFragment;
@@ -79,7 +80,11 @@ public class MainActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()){
             case R.id.map:
-                startActivity(new Intent(this, MapActivity.class));
+                if(Extras.location != null){
+                    startActivity(new Intent(this, MapActivity.class));
+                }else {
+                    Toast.makeText(this, R.string.no_valid_location, Toast.LENGTH_SHORT).show();
+                }
                 break;
         }
         return super.onOptionsItemSelected(item);
