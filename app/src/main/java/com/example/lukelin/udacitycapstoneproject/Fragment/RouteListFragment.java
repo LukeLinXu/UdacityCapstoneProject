@@ -68,7 +68,6 @@ public class RouteListFragment extends Fragment implements LoaderManager.LoaderC
             public void onBindViewHolder(RouteListViewHolder holder, int position) {
                 if(data.moveToPosition(position)){
                     final String tag = data.getString(data.getColumnIndex(RouteColumns.TAG));
-                    holder.mTag.setText(tag);
                     holder.mTitle.setText(data.getString(data.getColumnIndex(RouteColumns.TITLE)));
                     holder.itemView.setOnClickListener(new View.OnClickListener() {
                         @Override
@@ -92,11 +91,10 @@ public class RouteListFragment extends Fragment implements LoaderManager.LoaderC
     }
 
     private class RouteListViewHolder extends RecyclerView.ViewHolder{
-        public TextView mTag, mTitle;
+        public TextView mTitle;
 
         public RouteListViewHolder(View itemView) {
             super(itemView);
-            mTag = (TextView) itemView.findViewById(R.id.route_list_item_tag);
             mTitle = (TextView) itemView.findViewById(R.id.route_list_item_title);
         }
     }

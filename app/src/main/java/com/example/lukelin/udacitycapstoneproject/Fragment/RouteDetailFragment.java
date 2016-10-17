@@ -63,7 +63,6 @@ public class RouteDetailFragment extends ClickToRefreshFragmentBase<Route> {
             @Override
             public void onBindViewHolder(StopListViewHolder holder, int position) {
                 Direction direction = object.getDirectionList().get(position);
-                holder.mTag.setText(direction.getBranch());
                 holder.mTitle.setText(direction.getTitle());
             }
 
@@ -80,11 +79,10 @@ public class RouteDetailFragment extends ClickToRefreshFragmentBase<Route> {
     }
 
     private class StopListViewHolder extends RecyclerView.ViewHolder{
-        public TextView mTag, mTitle;
+        public TextView mTitle;
 
         public StopListViewHolder(View itemView) {
             super(itemView);
-            mTag = (TextView) itemView.findViewById(R.id.route_list_item_tag);
             mTitle = (TextView) itemView.findViewById(R.id.route_list_item_title);
         }
     }

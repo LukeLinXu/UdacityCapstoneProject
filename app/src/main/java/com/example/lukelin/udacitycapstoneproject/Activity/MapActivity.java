@@ -7,9 +7,9 @@ import android.content.Loader;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.FragmentActivity;
 import android.view.View;
-import android.widget.Button;
 
 import com.example.lukelin.udacitycapstoneproject.R;
 import com.example.lukelin.udacitycapstoneproject.data.StopColumns;
@@ -37,7 +37,7 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
     private double range = 0.005;
     private GoogleMap map;
     private HashMap<Marker, String> markers = new HashMap<>();
-    private Button button;
+    private FloatingActionButton button;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -47,7 +47,7 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
         getLoaderManager().initLoader(CURSOR_LOADER_ID, null, this);
-        button = (Button) findViewById(R.id.map_activity_button);
+        button = (FloatingActionButton) findViewById(R.id.map_activity_button);
     }
 
     @Override
