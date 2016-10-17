@@ -2,18 +2,19 @@ package com.example.lukelin.udacitycapstoneproject.Fragment;
 
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
 import android.widget.RelativeLayout;
-import android.widget.TextView;
 
 import com.example.lukelin.udacitycapstoneproject.R;
+import com.example.lukelin.udacitycapstoneproject.RecyclerViewComponent.RouteDetailDirectionAdapter;
 import com.example.lukelin.udacitycapstoneproject.pojos.Direction;
 import com.example.lukelin.udacitycapstoneproject.pojos.GetRouteResult;
 import com.example.lukelin.udacitycapstoneproject.pojos.Route;
+import com.example.lukelin.udacitycapstoneproject.pojos.Stop;
 import com.example.lukelin.udacitycapstoneproject.util.Extras;
 import com.example.lukelin.udacitycapstoneproject.util.RestClient;
+
+import java.util.HashMap;
+import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -53,24 +54,18 @@ public class RouteDetailFragment extends ClickToRefreshFragmentBase<Route> {
         RecyclerView recyclerView = (RecyclerView) mainContent.findViewById(R.id.route_detail_fragment_directions);
 
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-        recyclerView.setAdapter(new RecyclerView.Adapter<StopListViewHolder>() {
-            @Override
-            public StopListViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-                View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.route_list_item, parent, false);
-                return new StopListViewHolder(v);
+        HashMap<String, Stop> hashMap = new HashMap<>();
+        for(Stop stop : object.getStopList()){
+            hashMap.put(stop.getTag(), stop);
+        }
+        List<Direction> directionList = object.getDirectionList();
+        for(Direction direction : directionList){
+            for(Stop stop : direction.getStopList()){
+                stop.setTitle(hashMap.get(stop.getTag()).getTitle());
+                stop.setStopId(hashMap.get(stop.getTag()).getStopId());
             }
-
-            @Override
-            public void onBindViewHolder(StopListViewHolder holder, int position) {
-                Direction direction = object.getDirectionList().get(position);
-                holder.mTitle.setText(direction.getTitle());
-            }
-
-            @Override
-            public int getItemCount() {
-                return object.getDirectionList().size();
-            }
-        });
+        }
+        recyclerView.setAdapter(new RouteDetailDirectionAdapter(directionList));
     }
 
     @Override
@@ -78,12 +73,4 @@ public class RouteDetailFragment extends ClickToRefreshFragmentBase<Route> {
         return R.layout.route_detail_fragment;
     }
 
-    private class StopListViewHolder extends RecyclerView.ViewHolder{
-        public TextView mTitle;
-
-        public StopListViewHolder(View itemView) {
-            super(itemView);
-            mTitle = (TextView) itemView.findViewById(R.id.route_list_item_title);
-        }
-    }
 }

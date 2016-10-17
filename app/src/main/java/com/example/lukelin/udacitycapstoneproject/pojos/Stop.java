@@ -42,4 +42,12 @@ public class Stop {
     public int getStopId() {
         return stopId;
     }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public void setStopId(int stopId) {
+        this.stopId = stopId;
+    }
 }

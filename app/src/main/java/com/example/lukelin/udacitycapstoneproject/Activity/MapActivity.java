@@ -8,7 +8,7 @@ import android.database.Cursor;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
-import android.support.v4.app.FragmentActivity;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 
 import com.example.lukelin.udacitycapstoneproject.R;
@@ -30,7 +30,7 @@ import java.util.HashMap;
  * Created by LukeLin on 2016-10-15.
  */
 
-public class MapActivity extends FragmentActivity implements OnMapReadyCallback, LoaderManager.LoaderCallbacks<Cursor> {
+public class MapActivity extends AppCompatActivity implements OnMapReadyCallback, LoaderManager.LoaderCallbacks<Cursor> {
     private static final int CURSOR_LOADER_ID = 0;
     private double lat = Extras.location.getLatitude();
     private double lon = Extras.location.getLongitude();

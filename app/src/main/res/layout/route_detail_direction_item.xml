@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    >
+
+    <TextView
+        android:id="@+id/route_detail_direction_item_route_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:textSize="18sp"
+        android:textColor="@color/primary_light"
+        android:layout_margin="@dimen/global_margin"/>
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/route_detail_direction_item_recyclerview"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="5dp"
+        android:nestedScrollingEnabled="false"></android.support.v7.widget.RecyclerView>
+
+</LinearLayout>
