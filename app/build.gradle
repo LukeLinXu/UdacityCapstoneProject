@@ -18,6 +18,15 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+
+    productFlavors {
+        paid{
+            applicationId "com.example.lukelin.udacitycapstoneproject.paid"
+        }
+        free{
+            applicationId "com.example.lukelin.udacitycapstoneproject.free"
+        }
+    }
 }
 
 dependencies {
