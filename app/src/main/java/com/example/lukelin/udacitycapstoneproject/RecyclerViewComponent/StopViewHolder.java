@@ -1,7 +1,9 @@
 package com.example.lukelin.udacitycapstoneproject.RecyclerViewComponent;
 
+import android.app.ActivityOptions;
 import android.content.Context;
 import android.content.Intent;
+import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.TextView;
@@ -29,7 +31,9 @@ public class StopViewHolder extends RecyclerView.ViewHolder {
             @Override
             public void onClick(View v) {
                 Context context = itemView.getContext();
-                context.startActivity(new Intent(context, StopDetailActvity.class).putExtra(Extras.DATA, String.valueOf(data.getStopId())));
+                Bundle bndlanimation =
+                        ActivityOptions.makeCustomAnimation(context, R.anim.animation,R.anim.animation2).toBundle();
+                context.startActivity(new Intent(context, StopDetailActvity.class).putExtra(Extras.DATA, String.valueOf(data.getStopId())), bndlanimation);
             }
         });
     }

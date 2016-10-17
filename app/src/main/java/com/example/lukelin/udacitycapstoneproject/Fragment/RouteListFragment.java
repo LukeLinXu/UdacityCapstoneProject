@@ -1,5 +1,6 @@
 package com.example.lukelin.udacitycapstoneproject.Fragment;
 
+import android.app.ActivityOptions;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
@@ -72,7 +73,9 @@ public class RouteListFragment extends Fragment implements LoaderManager.LoaderC
                     holder.itemView.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
-                            startActivity(new Intent(getActivity(), RouteDetailActvity.class).putExtra(Extras.DATA, tag));
+                            Bundle bndlanimation =
+                                    ActivityOptions.makeCustomAnimation(getActivity(), R.anim.animation,R.anim.animation2).toBundle();
+                            startActivity(new Intent(getActivity(), RouteDetailActvity.class).putExtra(Extras.DATA, tag), bndlanimation);
                         }
                     });
                 }

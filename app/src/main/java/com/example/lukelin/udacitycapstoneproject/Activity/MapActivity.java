@@ -1,5 +1,6 @@
 package com.example.lukelin.udacitycapstoneproject.Activity;
 
+import android.app.ActivityOptions;
 import android.app.LoaderManager;
 import android.content.CursorLoader;
 import android.content.Intent;
@@ -62,7 +63,9 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
             @Override
             public void onInfoWindowClick(Marker marker) {
                 String id = markers.get(marker);
-                startActivity(new Intent(MapActivity.this, StopDetailActvity.class).putExtra(Extras.DATA, id));
+                Bundle bndlanimation =
+                        ActivityOptions.makeCustomAnimation(MapActivity.this, R.anim.animation,R.anim.animation2).toBundle();
+                startActivity(new Intent(MapActivity.this, StopDetailActvity.class).putExtra(Extras.DATA, id), bndlanimation);
             }
         });
         button.setOnClickListener(new View.OnClickListener() {

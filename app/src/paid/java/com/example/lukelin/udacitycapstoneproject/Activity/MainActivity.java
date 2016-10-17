@@ -1,5 +1,6 @@
 package com.example.lukelin.udacitycapstoneproject.Activity;
 
+import android.app.ActivityOptions;
 import android.content.Intent;
 import android.location.Location;
 import android.location.LocationListener;
@@ -81,7 +82,9 @@ public class MainActivity extends AppCompatActivity {
         switch (item.getItemId()){
             case R.id.map:
                 if(Extras.location != null){
-                    startActivity(new Intent(this, MapActivity.class));
+                    Bundle bndlanimation =
+                            ActivityOptions.makeCustomAnimation(this, R.anim.animation,R.anim.animation2).toBundle();
+                    startActivity(new Intent(this, MapActivity.class), bndlanimation);
                 }else {
                     Toast.makeText(this, R.string.no_valid_location, Toast.LENGTH_SHORT).show();
                 }
