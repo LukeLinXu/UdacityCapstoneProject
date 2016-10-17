@@ -9,6 +9,7 @@ import android.widget.TextView;
 import com.example.lukelin.udacitycapstoneproject.R;
 import com.example.lukelin.udacitycapstoneproject.pojos.Prediction;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 /**
@@ -28,7 +29,9 @@ public class PredictionViewHolder extends RecyclerView.ViewHolder {
     public void setData(Prediction data){
         final long epochTime = data.getEpochTime();
         updateCountDown(epochTime);
-        time.setText(new Date(epochTime).toString());
+        SimpleDateFormat sdf = new SimpleDateFormat("HH:mm:ss");
+        Date date = new Date(epochTime);
+        time.setText(sdf.format(date));
         new CountDownTimer(DateUtils.HOUR_IN_MILLIS, 1000) {
             @Override
             public void onTick(long millisUntilFinished) {

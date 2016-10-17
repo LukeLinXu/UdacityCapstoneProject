@@ -1,23 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    >
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:background="@color/primary_light">
 
         <TextView
             android:id="@+id/predictions_item_tag"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:layout_width="60dp"
+            android:layout_height="wrap_content"
+            android:textSize="25sp"
+            android:textColor="@color/white"
+            android:textStyle="bold"
+            android:text="199"
+            android:layout_margin="@dimen/global_margin"/>
 
         <TextView
             android:id="@+id/predictions_item_route_title"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="1"/>
+            android:layout_weight="1"
+            android:textSize="20sp"
+            android:textColor="@color/white"/>
 
         <CheckBox
             android:id="@+id/predictions_item_favorite_checkbox"
@@ -25,6 +35,7 @@
             android:layout_height="wrap_content"
             style="?android:attr/starStyle"
             android:clickable="true"
+            android:layout_margin="@dimen/global_margin"
             />
 
     </LinearLayout>
@@ -32,6 +43,7 @@
     <android.support.v7.widget.RecyclerView
         android:id="@+id/predictions_item_recyclerview"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"></android.support.v7.widget.RecyclerView>
+        android:layout_height="wrap_content"
+        android:nestedScrollingEnabled="false"></android.support.v7.widget.RecyclerView>
 
 </LinearLayout>
