@@ -101,9 +101,8 @@ public class MainActivity extends AppCompatActivity {
 
     private void setupViewPager() {
         adapter = new SimpleAdapter(getSupportFragmentManager());
-        adapter.addFragment(new FavoriteListFragment(), "Favorite");
-        adapter.addFragment(new SurroundingStopFragment(), "Surround");
-        adapter.addFragment(new RouteListFragment(), "RouteList");
+        adapter.addFragment(new FavoriteListFragment(), getString(R.string.favorites));
+        adapter.addFragment(new RouteListFragment(), getString(R.string.route_list));
         viewPager.setAdapter(adapter);
     }
 
