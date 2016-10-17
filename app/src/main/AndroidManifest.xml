@@ -14,10 +14,11 @@
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:supportsRtl="true"
-        android:theme="@style/Theme.DesignDemo">
+        android:theme="@style/AppTheme">
         <activity
             android:name=".Activity.MainActivity"
-            android:label="@string/app_name">
+            android:label="@string/app_name"
+            android:theme="@style/Theme.DesignDemo">
         </activity>
 
         <activity
@@ -35,6 +36,26 @@
         <activity android:name=".Activity.StopDetailActvity"/>
 
         <activity android:name=".Activity.MapActivity"/>
+
+        <receiver
+            android:name=".widget.DetailWidgetProvider"
+            android:enabled="true"
+            android:label="@string/title_widget_detail" >
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+                <action android:name="com.example.lukelin.udacitycapstoneproject.ACTION_DATA_UPDATED" />
+            </intent-filter>
+
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/widget_info_detail" />
+        </receiver>
+
+        <service
+            android:name=".widget.DetailWidgetRemoteViewsService"
+            android:enabled="true"
+            android:exported="false"
+            android:permission="android.permission.BIND_REMOTEVIEWS" />
 
         <service android:name=".FavoriteIntentService"/>
 

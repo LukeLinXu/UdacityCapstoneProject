@@ -1,5 +1,8 @@
 <resources>
-    <string name="app_name">UdacityCapstoneProject</string>
-    <string name="action_settings">Settings</string>
+    <string name="app_name">EASYTTC</string>
     <string name="redo">Redo</string>
+    <string name="empty_list">No data available</string>
+    <string name="title_widget_detail">FavoriteDetail</string>
+    <string name="search_title">search</string>
+    <string name="click_to_refresh">Click to\nrefresh</string>
 </resources>

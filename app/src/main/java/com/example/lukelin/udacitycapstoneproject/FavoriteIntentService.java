@@ -27,7 +27,8 @@ import retrofit2.Response;
  */
 
 public class FavoriteIntentService extends IntentService {
-
+    public static final String ACTION_DATA_UPDATED =
+            "com.example.lukelin.udacitycapstoneproject.ACTION_DATA_UPDATED";
 
     public FavoriteIntentService() {
         super("FavoriteIntentService");
@@ -76,8 +77,20 @@ public class FavoriteIntentService extends IntentService {
         } catch (OperationApplicationException e) {
             e.printStackTrace();
         }
+
+        updateWidget();
+
         ResultReceiver rec = intent.getParcelableExtra("receiverTag");
         Bundle b=new Bundle();
-        rec.send(101, b);
+        if(rec != null){
+            rec.send(101, b);
+        }
+    }
+
+    private void updateWidget() {
+        // Setting the package ensures that only components in our app will receive the broadcast
+        Intent dataUpdatedIntent = new Intent(ACTION_DATA_UPDATED)
+                .setPackage(getPackageName());
+        sendBroadcast(dataUpdatedIntent);
     }
 }

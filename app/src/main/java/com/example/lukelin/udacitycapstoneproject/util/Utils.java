@@ -35,6 +35,8 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+import static com.example.lukelin.udacitycapstoneproject.FavoriteIntentService.ACTION_DATA_UPDATED;
+
 /**
  * Created by LukeLin on 2016-10-12.
  */
@@ -58,7 +60,7 @@ public class Utils {
         return builder.build();
     }
 
-    public static void buildBatchOperationDelete(String tag, ContentResolver contentResolver){
+    public static void buildBatchOperationDelete(String tag, ContentResolver contentResolver, Context context){
         ContentProviderOperation.Builder builder = ContentProviderOperation.newDelete(
                 FavoriteProvider.Favorites.CONTENT_URI);
         builder.withSelection(FavoriteColumns.TAG+"=?", new String[]{tag});
@@ -69,9 +71,12 @@ public class Utils {
         } catch (OperationApplicationException e) {
             e.printStackTrace();
         }
+        Intent dataUpdatedIntent = new Intent(ACTION_DATA_UPDATED)
+                .setPackage(context.getPackageName());
+        context.sendBroadcast(dataUpdatedIntent);
     }
 
-    public static void buildBatchOperation(Favorite favorite, ContentResolver contentResolver) {
+    public static void buildBatchOperation(Favorite favorite, ContentResolver contentResolver, Context context) {
         try {
             contentResolver.applyBatch(FavoriteProvider.AUTHORITY, new ArrayList<>(Arrays.asList(buildBatchOperation(favorite))));
         } catch (RemoteException e) {
@@ -79,6 +84,9 @@ public class Utils {
         } catch (OperationApplicationException e) {
             e.printStackTrace();
         }
+        Intent dataUpdatedIntent = new Intent(ACTION_DATA_UPDATED)
+                .setPackage(context.getPackageName());
+        context.sendBroadcast(dataUpdatedIntent);
     }
 
     public static boolean hasFavorite(String tag, ContentResolver contentResolver){

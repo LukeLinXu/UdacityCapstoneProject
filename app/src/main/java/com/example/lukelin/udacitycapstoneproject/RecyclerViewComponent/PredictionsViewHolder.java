@@ -1,5 +1,6 @@
 package com.example.lukelin.udacitycapstoneproject.RecyclerViewComponent;
 
+import android.content.Context;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -30,20 +31,21 @@ public class PredictionsViewHolder extends RecyclerView.ViewHolder {
     }
 
     public void setData(final Predictions data) {
+        final Context context = itemView.getContext();
         tag.setText(data.getRouteTag());
         header.setText(data.getRouteTitle());
-        favoriteCheckbox.setChecked(Utils.hasFavorite(data.getFavoriteTag(), itemView.getContext().getContentResolver()));
+        favoriteCheckbox.setChecked(Utils.hasFavorite(data.getFavoriteTag(), context.getContentResolver()));
         favoriteCheckbox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if(isChecked){
-                    Utils.buildBatchOperation(data.getFavorite(System.currentTimeMillis()), itemView.getContext().getContentResolver());
+                    Utils.buildBatchOperation(data.getFavorite(System.currentTimeMillis()), context.getContentResolver(), context);
                 }else {
-                    Utils.buildBatchOperationDelete(data.getFavoriteTag(), itemView.getContext().getContentResolver());
+                    Utils.buildBatchOperationDelete(data.getFavoriteTag(), context.getContentResolver(), context);
                 }
             }
         });
-        recyclerView.setLayoutManager(new LinearLayoutManager(itemView.getContext()));
+        recyclerView.setLayoutManager(new LinearLayoutManager(context));
         recyclerView.setAdapter(new DirectionAdapter(data.getDirectionList()));
     }
 }

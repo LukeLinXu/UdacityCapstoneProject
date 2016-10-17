@@ -1,5 +1,7 @@
 package com.example.lukelin.udacitycapstoneproject.pojos;
 
+import android.text.format.DateUtils;
+
 import com.google.gson.Gson;
 
 import org.simpleframework.xml.Attribute;
@@ -68,5 +70,20 @@ public class Predictions {
 
     public String getStopTag() {
         return stopTag;
+    }
+
+    public String getFirstTimeLeft() {
+        long firstTimeStamp = System.currentTimeMillis() + DateUtils.DAY_IN_MILLIS;
+        long temp = firstTimeStamp;
+        for(Direction direction : getDirectionList()){
+            for(Prediction prediction : direction.getPredictionList()){
+                long epochTime = prediction.getEpochTime();
+                if(epochTime < firstTimeStamp){
+                    firstTimeStamp = epochTime;
+                }
+            }
+        }
+        if(firstTimeStamp == temp) return "N/A";
+        return DateUtils.formatElapsedTime((firstTimeStamp - System.currentTimeMillis())/1000);
     }
 }
