@@ -17,7 +17,6 @@ import android.view.MenuItem;
 
 import com.example.lukelin.udacitycapstoneproject.Fragment.FavoriteListFragment;
 import com.example.lukelin.udacitycapstoneproject.Fragment.RouteListFragment;
-import com.example.lukelin.udacitycapstoneproject.Fragment.SurroundingStopFragment;
 import com.example.lukelin.udacitycapstoneproject.R;
 import com.example.lukelin.udacitycapstoneproject.util.Extras;
 import com.google.android.gms.ads.AdRequest;
@@ -92,7 +91,7 @@ public class MainActivity extends AppCompatActivity {
 //                startActivity(new Intent(MainActivity.this, SearchActivity.class).putExtra(Extras.SORT_OPTIONS,
 //                        currentSortOption));
                 break;
-            case R.id.sort:
+            case R.id.map:
                 startActivity(new Intent(this, MapActivity.class));
                 break;
         }
