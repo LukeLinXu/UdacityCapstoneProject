@@ -87,10 +87,6 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()){
-            case R.id.search:
-//                startActivity(new Intent(MainActivity.this, SearchActivity.class).putExtra(Extras.SORT_OPTIONS,
-//                        currentSortOption));
-                break;
             case R.id.map:
                 startActivity(new Intent(this, MapActivity.class));
                 break;
