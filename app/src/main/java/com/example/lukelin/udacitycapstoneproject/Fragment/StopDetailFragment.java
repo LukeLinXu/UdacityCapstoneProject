@@ -48,7 +48,7 @@ public class StopDetailFragment extends ClickToRefreshFragmentBase<List<Predicti
 
     @Override
     protected void refreshUI(RelativeLayout mainContent, final List<Predictions> object) {
-        RecyclerView recyclerView = (RecyclerView) mainContent.findViewById(R.id.route_detail_fragment_directions);
+        RecyclerView recyclerView = (RecyclerView) mainContent.findViewById(R.id.stop_detail_fragment_directions);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         PredictionsAdapter predictionsAdapter = new PredictionsAdapter(object);
         recyclerView.setAdapter(predictionsAdapter);
@@ -56,7 +56,7 @@ public class StopDetailFragment extends ClickToRefreshFragmentBase<List<Predicti
 
     @Override
     protected int getLayoutId() {
-        return R.layout.route_detail_fragment;
+        return R.layout.stop_detail_fragment;
     }
 
 }

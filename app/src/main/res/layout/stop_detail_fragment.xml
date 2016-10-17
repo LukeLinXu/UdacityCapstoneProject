@@ -3,12 +3,8 @@
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <include
-        layout="@layout/route_list_item"
-        />
-
     <android.support.v7.widget.RecyclerView
-        android:id="@+id/route_detail_fragment_directions"
+        android:id="@+id/stop_detail_fragment_directions"
         android:layout_width="match_parent"
         android:layout_height="match_parent"></android.support.v7.widget.RecyclerView>
 

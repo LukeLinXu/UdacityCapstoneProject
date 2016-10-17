@@ -11,6 +11,7 @@
         android:layout_weight="1"
         android:textSize="18sp"
         android:textColor="@color/primary_light"
+        android:textStyle="bold"
         android:layout_margin="@dimen/global_margin"/>
 
     <android.support.v7.widget.RecyclerView
